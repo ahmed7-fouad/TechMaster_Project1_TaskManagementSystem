@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+
+:root{
+  --primaryc:#1E1B4B;
+  --secondaryc:#6D28D9;
+  --muted-text:#9CA3AF;
+}
+
+@theme{
+  --color-primaryc:var(--primaryc);
+  --color-secondaryc:var(--secondaryc);
+  --color-muted-text:var(--muted-text);
+}

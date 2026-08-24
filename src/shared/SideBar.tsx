@@ -63,7 +63,7 @@ const SideBar=()=>{
         setActiveBoardLinks(updatedActiveLinks);
     }
     return (
-      <aside className="w-[21rem] py-4 px-5 bg-primaryc h-screen">
+      <aside className=" py-4 px-5 bg-primaryc h-screen">
         <section className="w-full bg-white rounded-xl flex items-center justify-center mb-7">
           <img src="/src/assets/logo.png" alt="LogoIcon" className="w-[8rem]" />
         </section>

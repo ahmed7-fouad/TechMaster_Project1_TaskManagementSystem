@@ -1,19 +1,23 @@
+import React from "react";
+
 interface SearchInputProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
 }
 
 export default function SearchInput({
-  searchQuery,
-  setSearchQuery,
+  value,
+  onChange,
+  placeholder = "Search...",
 }: SearchInputProps) {
   return (
     <div className="w-full">
       <input
         type="text"
-        placeholder="Search notes..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
         className="w-full p-3 border border-slate-300 rounded-lg outline-none focus:border-indigo-600 text-sm shadow-sm"
       />
     </div>

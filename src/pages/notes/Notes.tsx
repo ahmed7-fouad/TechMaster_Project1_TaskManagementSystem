@@ -19,9 +19,9 @@ export default function Notes({ isModalOpen, setIsModalOpen }: NotesProps) {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const [notes, setNotes] = useState<Note[]>(() => {
-  const savedNotes = localStorage.getItem("notes");
-  return savedNotes ? JSON.parse(savedNotes) : [];
-});
+    const savedNotes = localStorage.getItem("app_notes");
+    return savedNotes ? JSON.parse(savedNotes) : [];
+  });
 
   useEffect(() => {
     localStorage.setItem("app_notes", JSON.stringify(notes));
@@ -60,10 +60,9 @@ export default function Notes({ isModalOpen, setIsModalOpen }: NotesProps) {
       <div className="w-full space-y-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <SearchInput
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">

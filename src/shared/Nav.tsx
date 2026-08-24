@@ -24,9 +24,9 @@ const Nav = ({
     <nav className="border-b-2  border-gray-200">
       <section className="main-container flex items-center justify-between py-5">
         <section>
-          <h1 className="text-4xl capitalize font-semibold mb-3">{title}</h1>
+          <h1 className="md:text-4xl text-2xl text-indigo-700 capitalize font-semibold mb-3">{title}</h1>
           {desc && (
-            <p className="text-2xl text-muted-text font-medium">{desc}</p>
+            <p className="md:text-2xl text-sm text-muted-text font-medium">{desc}</p>
           )}
         </section>
 

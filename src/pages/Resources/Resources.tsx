@@ -35,7 +35,15 @@ const INITIAL_RESOURCES: Resource[] = [
   },
 ];
 
-export default function Resources() {
+interface ResourcesProps {
+  isModalOpen: boolean;
+  setIsModalOpen: (open: boolean) => void;
+}
+
+export default function Resources({
+  isModalOpen,
+  setIsModalOpen,
+}: ResourcesProps) {
   const [resources, setResources] = useState<Resource[]>(() => {
     const saved = localStorage.getItem("resources");
     return saved ? JSON.parse(saved) : INITIAL_RESOURCES;
@@ -44,7 +52,6 @@ export default function Resources() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newSource, setNewSource] = useState("");
   const [newCategory, setNewCategory] =
@@ -125,18 +132,20 @@ export default function Resources() {
   const storagePercentage = Math.min((usedStorage / 10) * 100, 100);
 
   return (
-    <div className="space-y-6">
-      <Nav
-        title="Resources"
-        desc="Store and manage your important links & files"
-        btnContent="Add Resource"
-        btnColor="bg-indigo-600 hover:bg-indigo-700 transition-colors"
-        btnContentColor="text-white"
-        icon={<Plus size={18} />}
-        onBtnClick={() => setIsModalOpen(true)}
-      />
+    <div className="flex flex-col h-full w-full">
+      <div className="p-6 border-b border-gray-100 bg-white">
+        <Nav
+          title="Resources"
+          desc="Store and manage your important links & files"
+          btnContent="Add Resource"
+          btnColor="bg-indigo-600 hover:bg-indigo-700 transition-colors"
+          btnContentColor="text-white"
+          icon={<Plus size={18} />}
+          onBtnClick={() => setIsModalOpen(true)}
+        />
+      </div>
 
-      <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="p-6 max-w-7xl mx-auto space-y-6 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-4">
             <div className="flex flex-col sm:flex-row justify-between gap-4">

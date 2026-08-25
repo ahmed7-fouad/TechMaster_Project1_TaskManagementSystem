@@ -21,7 +21,7 @@ const Nav = ({
   onBtnClick,
 }: navData) => {
   return (
-    <nav className="border-b-2  border-gray-200">
+    <nav className="">
       <section className="main-container flex items-center justify-between py-5">
         <section>
           <h1 className="md:text-4xl text-2xl text-indigo-700 capitalize font-semibold mb-3">{title}</h1>

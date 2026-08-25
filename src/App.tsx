@@ -1,39 +1,29 @@
-<<<<<<< HEAD
-import './App.css'
-import { Profile } from './pages/profile/Profile';
+import "./App.css";
+// import { Profile } from './pages/profile/Profile';
 
-function App() {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-
-  return (
-    <>
-     <Profile/>
-    </>
-  )
-}
-
-export default App
-=======
 import { useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import SideBar from "./shared/SideBar";
 import Nav from "./shared/Nav";
 import { Plus } from "lucide-react";
 import Notes from "./pages/notes/Notes";
 import Resources from "./pages/Resources/Resources";
+import Home from "./pages/Home/Home";
 
 export default function App() {
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const [isResourceModalOpen, setIsResourceModalOpen] = useState(false);
+  const { pathname } = useLocation();
+  const isHomePage = pathname === "/";
 
   return (
-    <section className="grid grid-cols-[21rem_1fr] min-h-screen">
-      <SideBar />
+    <section className={`${isHomePage ? "" : "grid grid-cols-[21rem_1fr]"} min-h-screen`}>
+      {!isHomePage && <SideBar />}
 
       <main className="flex flex-col bg-gray-50/50">
         <Routes>
-          <Route path="/" element={<Navigate to="/notes" replace />} />
+          <Route path="/" element={<Home />} />
 
           <Route
             path="/notes"
@@ -74,4 +64,3 @@ export default function App() {
     </section>
   );
 }
->>>>>>> 671855c3df341c0ab025acc5bc485b8cfb6316a0

@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 import { Menu } from "lucide-react";
 
 interface btnData {
-  icon?: ReactElement;
+  icon?: ReactNode;
   title?: string;
   btnColor?: string;
   btnContentColor?: string;

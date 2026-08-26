@@ -1,5 +1,4 @@
-
-import type { ReactElement } from "react";
+import type { ReactNode } from "react";
 import MainBtn from "./MainBtn";
 import { Menu } from "lucide-react";
 
@@ -55,6 +54,20 @@ const Nav = ({
           />
         )}
 
+      </section>
+    </nav>
+  );
+};
+
+        {btnContent && icon && (
+          <MainBtn
+            btnContentColor={btnContentColor}
+            icon={icon}
+            title={btnContent}
+            btnColor={btnColor}
+            onClick={onBtnClick}
+          />
+        )}
       </section>
     </nav>
   );

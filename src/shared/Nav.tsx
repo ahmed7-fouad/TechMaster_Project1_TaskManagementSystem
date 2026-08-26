@@ -53,24 +53,11 @@ const Nav = ({
             getTaskIdAndTheme={getTaskIdAndTheme}
           />
         )}
-
       </section>
     </nav>
   );
 };
 
-        {btnContent && icon && (
-          <MainBtn
-            btnContentColor={btnContentColor}
-            icon={icon}
-            title={btnContent}
-            btnColor={btnColor}
-            onClick={onBtnClick}
-          />
-        )}
-      </section>
-    </nav>
-  );
-};
+    
 
 export default Nav;

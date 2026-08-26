@@ -1,0 +1,289 @@
+const items = [
+  { label: "Light", value: "light" },
+  { label: "Dark", value: "dark" },
+  { label: "System", value: "system" },
+]
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import {
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+} from "@/components/ui/select";
+
+import { type taskCardData } from "@/data/TasksData";
+import { Field, FieldGroup } from "@/components/ui/field";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useAllTasks } from "@/Providers/ِTasksDataProvider";
+
+import {useState} from "react"
+
+// Create Unique Id Using UUID Library
+import { v4 as uuidv4 } from 'uuid'; // Import the uuid generator
+ 
+
+const TaskDialog = ({
+  taskId,
+  dialogState,
+  setDialogState,
+  theme,
+}: {
+  taskId:string|number,
+  dialogState?: boolean;
+  setDialogState?: (data: boolean) => void;
+  theme?: string;
+}) => {
+
+  const date = new Date("2026-08-25T12:00:00");
+  const ukFormat = new Intl.DateTimeFormat("en-GB").format(date);
+
+  const taskStatusChoices: { label: string; value: string | null }[] = [
+    //   { label: "Select The Task Status", value: null },
+    { label: "pending", value: "pending" },
+    { label: "completed", value: "completed" },
+    { label: "in progress", value: "in progress" },
+  ];
+
+  const taskPriorityChoices: { label: string; value: string | null }[] = [
+    {
+      label: "high",
+      value: "high",
+    },
+    {
+      label: "medium",
+      value: "medium",
+    },
+    {
+      label: "low",
+      value: "low",
+    },
+  ];
+
+  const [dialogDataObj, setDialogDataObj] = useState<taskCardData>({
+    id: uuidv4(),
+    title: "",
+    status: "",
+    priority: "",
+    date: "",
+  });
+
+  const { addTask, editTask ,deleteTask} = useAllTasks();
+
+  function handleAction() {
+    if (theme == "task" || theme == "update") {
+      if (!dialogDataObj.title) {
+        window.alert("The Task Title Is Missing");
+      } else if (!dialogDataObj.status) {
+        window.alert("The Task Status Is Missing");
+      } else if (!dialogDataObj.priority) {
+        window.alert("The Task Priority is Missing");
+      } else if (!dialogDataObj.date) {
+        window.alert("The Task Date Is Missing");
+      } else {
+        if (theme == "task") {
+          addTask(dialogDataObj);
+        } else if (theme == "update") {
+          editTask(taskId,dialogDataObj);
+            window.alert("Task is updated successfully");
+        }
+        setDialogState(false);
+      }
+    }else if(theme=="delete"){
+        deleteTask(taskId);
+        setDialogState(false);
+        window.alert("Task is deleted successfully");
+    }
+  }
+
+  const dialogData: {
+    title?: string;
+    description?: string;
+    mainBtnContent?: string;
+  } = {
+    title: "",
+    description: "",
+    mainBtnContent: "add",
+  };
+  if (theme == "task") {
+    dialogData.title = "add task";
+    dialogData.description = "add your task details here";
+  } else if (theme == "resource") {
+    dialogData.title = "add resource";
+    dialogData.description = "add your resource details here";
+  } else if (theme == "note") {
+    dialogData.title = "add note";
+    dialogData.description = "add you note details here";
+  } else if (theme == "update") {
+    dialogData.title = "edit task";
+    dialogData.description = "update the task details here";
+    dialogData.mainBtnContent = "update";
+  } else if (theme == "delete") {
+    dialogData.title = "delete task";
+    dialogData.description = "Are you sure you want to delete this task?";
+    dialogData.mainBtnContent = "delete";
+  }
+
+  console.log("The Theme Now Is ",theme)
+  return (
+    <Dialog open={dialogState} onOpenChange={setDialogState}>
+      <form>
+        <DialogContent className="sm:max-w-sm bg-white">
+            <DialogHeader>
+              <DialogTitle className="capitalize">
+                {dialogData.title}
+              </DialogTitle>
+              <DialogDescription className="capitalize">
+                {dialogData.description}
+              </DialogDescription>
+            </DialogHeader>
+
+          {(theme == "task" || theme == "update") && (
+            <FieldGroup>
+              <Field>
+                <Label htmlFor="name-1" className="capitalize">
+                  task title
+                </Label>
+                <Input
+                  id="name-1"
+                  name="name"
+                  defaultValue="task title"
+                  value={dialogDataObj.title}
+                  onChange={(e) =>
+                    setDialogDataObj({
+                      ...dialogDataObj,
+                      title: e.target.value,
+                    })
+                  }
+                />
+              </Field>
+              <section className="flex items-center gap-5">
+                <section className="flex-1">
+                  <Select
+                    items={taskStatusChoices}
+                    className=""
+                    value={dialogDataObj.status}
+                    onValueChange={(value) =>
+                      setDialogDataObj({
+                        ...dialogDataObj,
+                        status: value,
+                      })
+                    }
+                  >
+                    <Label htmlFor="name-3" className="capitalize block mb-3">
+                      status
+                    </Label>
+                    <SelectTrigger className="w-full max-w-48">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white">
+                      <SelectGroup>
+                        <SelectLabel>Task Status</SelectLabel>
+                        {taskStatusChoices.map((item) => (
+                          <SelectItem
+                            className="capitalize"
+                            key={item.value}
+                            value={!item.value ? "" : item.value}
+                          >
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </section>
+
+                {/* Priority */}
+                <section className="flex-1">
+                  <Select
+                    items={items}
+                    value={dialogDataObj.priority}
+                    onValueChange={(value) =>
+                      setDialogDataObj({
+                        ...dialogDataObj,
+                        priority: value,
+                      })
+                    }
+                  >
+                    <Label htmlFor="name-3" className="capitalize block mb-3">
+                      Priority
+                    </Label>
+                    <SelectTrigger className="w-full max-w-48">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white">
+                      <SelectGroup>
+                        <SelectLabel>Task Priority</SelectLabel>
+                        {taskPriorityChoices.map((item) => (
+                          <SelectItem
+                            className="capitalize"
+                            key={item.value}
+                            value={!item.value ? "" : item.value}
+                          >
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </section>
+              </section>
+
+              <Field>
+                <Label htmlFor="username-1" className="capitalize">
+                  date
+                </Label>
+                <Input
+                  id="username-1"
+                  type="date"
+                  name="username"
+                  defaultValue={ukFormat}
+                  value={dialogDataObj.date}
+                  onChange={(e) =>
+                    setDialogDataObj({ ...dialogDataObj, date: e.target.value })
+                  }
+                />
+              </Field>
+            </FieldGroup>
+          )}
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button
+                variant="outline"
+                className="capitalize hover:bg-thirdc hover:text-white duration-150 cursor-pointer"
+              >
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button
+              type="submit"
+              className="capitalize hover:bg-thirdc hover:text-white duration-150 cursor-pointer"
+              onClick={handleAction}
+            >
+              {dialogData.mainBtnContent}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </form>
+    </Dialog>
+  );
+};
+export default TaskDialog;

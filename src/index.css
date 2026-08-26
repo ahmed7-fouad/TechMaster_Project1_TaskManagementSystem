@@ -80,5 +80,5 @@
 }
 
 .main-container{
-  @apply px-7;
+  @apply px-11 lg:px-10;
 }

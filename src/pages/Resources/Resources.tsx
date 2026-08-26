@@ -65,31 +65,42 @@ export default function Resources({
     switch (category) {
       case "Document":
         return {
-          icon: <FileText size={22} className="text-blue-600" />,
-          iconBg: "bg-blue-100",
-          badgeText: "text-blue-600",
-          badgeBg: "bg-blue-50",
+          icon: (
+            <FileText size={22} className="text-blue-600 dark:text-blue-400" />
+          ),
+          iconBg: "bg-blue-100 dark:bg-blue-950/60",
+          badgeText: "text-blue-600 dark:text-blue-400",
+          badgeBg: "bg-blue-50 dark:bg-blue-950/40",
         };
       case "Design":
         return {
-          icon: <PenTool size={22} className="text-pink-600" />,
-          iconBg: "bg-pink-100",
-          badgeText: "text-pink-600",
-          badgeBg: "bg-pink-50",
+          icon: (
+            <PenTool size={22} className="text-pink-600 dark:text-pink-400" />
+          ),
+          iconBg: "bg-pink-100 dark:bg-pink-950/60",
+          badgeText: "text-pink-600 dark:text-pink-400",
+          badgeBg: "bg-pink-50 dark:bg-pink-950/40",
         };
       case "API":
         return {
-          icon: <Braces size={22} className="text-orange-600" />,
-          iconBg: "bg-orange-100",
-          badgeText: "text-orange-600",
-          badgeBg: "bg-orange-50",
+          icon: (
+            <Braces
+              size={22}
+              className="text-orange-600 dark:text-orange-400"
+            />
+          ),
+          iconBg: "bg-orange-100 dark:bg-orange-950/60",
+          badgeText: "text-orange-600 dark:text-orange-400",
+          badgeBg: "bg-orange-50 dark:bg-orange-950/40",
         };
       case "Development":
         return {
-          icon: <Layers size={22} className="text-teal-600" />,
-          iconBg: "bg-teal-100",
-          badgeText: "text-teal-600",
-          badgeBg: "bg-teal-50",
+          icon: (
+            <Layers size={22} className="text-teal-600 dark:text-teal-400" />
+          ),
+          iconBg: "bg-teal-100 dark:bg-teal-950/60",
+          badgeText: "text-teal-600 dark:text-teal-400",
+          badgeBg: "bg-teal-50 dark:bg-teal-950/40",
         };
     }
   };
@@ -132,8 +143,8 @@ export default function Resources({
   const storagePercentage = Math.min((usedStorage / 10) * 100, 100);
 
   return (
-    <div className="flex flex-col h-full w-full">
-      <div className="p-6 border-b border-gray-100 bg-white">
+    <div className="flex flex-col h-full w-full bg-slate-50 dark:bg-gray-900 transition-colors">
+      <div className="p-6 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800">
         <Nav
           title="Resources"
           desc="Store and manage your important links & files"
@@ -159,7 +170,7 @@ export default function Resources({
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="All Categories">All Categories</option>
                 <option value="Document">Document</option>
@@ -176,7 +187,7 @@ export default function Resources({
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+                      className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow"
                     >
                       <div className="flex items-center gap-4">
                         <div
@@ -185,10 +196,12 @@ export default function Resources({
                           {config.icon}
                         </div>
                         <div>
-                          <h4 className="font-semibold text-gray-800">
+                          <h4 className="font-semibold text-gray-800 dark:text-gray-100">
                             {item.title}
                           </h4>
-                          <p className="text-xs text-gray-400">{item.source}</p>
+                          <p className="text-xs text-gray-400 dark:text-gray-400">
+                            {item.source}
+                          </p>
                         </div>
                       </div>
 
@@ -200,7 +213,7 @@ export default function Resources({
                         </span>
                         <button
                           onClick={() => handleDeleteResource(item.id)}
-                          className="text-gray-400 hover:text-red-500 p-1 transition-colors cursor-pointer"
+                          className="text-gray-400 hover:text-red-500 dark:hover:text-red-400 p-1 transition-colors cursor-pointer"
                           title="Delete resource"
                         >
                           <Trash2 size={18} />
@@ -210,8 +223,8 @@ export default function Resources({
                   );
                 })
               ) : (
-                <div className="text-center py-10 bg-white rounded-xl border border-dashed border-gray-200">
-                  <p className="text-gray-400 font-medium">
+                <div className="text-center py-10 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
+                  <p className="text-gray-400 dark:text-gray-500 font-medium">
                     No resources found.
                   </p>
                 </div>
@@ -220,28 +233,30 @@ export default function Resources({
           </div>
 
           <div className="space-y-6">
-            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm space-y-4">
-              <h3 className="font-bold text-gray-800 text-sm">Categories</h3>
+            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-4">
+              <h3 className="font-bold text-gray-800 dark:text-gray-100 text-sm">
+                Categories
+              </h3>
               <div className="space-y-3 text-sm">
-                <div className="flex justify-between items-center text-gray-600">
+                <div className="flex justify-between items-center text-gray-600 dark:text-gray-300">
                   <span className="flex items-center gap-2">
                     <Folder size={16} className="text-blue-500" /> Document
                   </span>
                   <span className="font-semibold">{getCount("Document")}</span>
                 </div>
-                <div className="flex justify-between items-center text-gray-600">
+                <div className="flex justify-between items-center text-gray-600 dark:text-gray-300">
                   <span className="flex items-center gap-2">
                     <Folder size={16} className="text-pink-500" /> Design
                   </span>
                   <span className="font-semibold">{getCount("Design")}</span>
                 </div>
-                <div className="flex justify-between items-center text-gray-600">
+                <div className="flex justify-between items-center text-gray-600 dark:text-gray-300">
                   <span className="flex items-center gap-2">
                     <Folder size={16} className="text-orange-500" /> API
                   </span>
                   <span className="font-semibold">{getCount("API")}</span>
                 </div>
-                <div className="flex justify-between items-center text-gray-600">
+                <div className="flex justify-between items-center text-gray-600 dark:text-gray-300">
                   <span className="flex items-center gap-2">
                     <Folder size={16} className="text-teal-500" /> Development
                   </span>
@@ -252,14 +267,16 @@ export default function Resources({
               </div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm space-y-3">
+            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-3">
               <div className="flex justify-between items-center text-sm">
-                <h3 className="font-bold text-gray-800">Storage Used</h3>
-                <span className="text-xs font-semibold text-gray-500">
+                <h3 className="font-bold text-gray-800 dark:text-gray-100">
+                  Storage Used
+                </h3>
+                <span className="text-xs font-semibold text-gray-500 dark:text-gray-400">
                   {usedStorage} GB / 10 GB
                 </span>
               </div>
-              <div className="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+              <div className="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
                 <div
                   className="bg-indigo-600 h-full rounded-full transition-all duration-300"
                   style={{ width: `${storagePercentage}%` }}
@@ -271,13 +288,13 @@ export default function Resources({
 
         {isModalOpen && (
           <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl w-full max-w-md p-6 space-y-5 shadow-xl">
-              <h3 className="text-lg font-bold text-gray-800">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 space-y-5 shadow-xl border border-gray-100 dark:border-gray-700">
+              <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">
                 Add New Resource
               </h3>
               <form onSubmit={handleAddResource} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">
+                  <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
                     Title
                   </label>
                   <input
@@ -286,12 +303,12 @@ export default function Resources({
                     placeholder="e.g. Project Specs"
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-transparent text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">
+                  <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
                     Source / Platform
                   </label>
                   <input
@@ -300,12 +317,12 @@ export default function Resources({
                     placeholder="e.g. Google Drive, Notion, Figma"
                     value={newSource}
                     onChange={(e) => setNewSource(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-transparent text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">
+                  <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
                     Category
                   </label>
                   <select
@@ -313,7 +330,7 @@ export default function Resources({
                     onChange={(e) =>
                       setNewCategory(e.target.value as Resource["category"])
                     }
-                    className="w-full px-3 py-2 border rounded-lg text-sm bg-white border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border rounded-lg text-sm bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
                     <option value="Document">Document</option>
                     <option value="Design">Design</option>
@@ -326,7 +343,7 @@ export default function Resources({
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"
+                    className="px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg cursor-pointer transition-colors"
                   >
                     Cancel
                   </button>

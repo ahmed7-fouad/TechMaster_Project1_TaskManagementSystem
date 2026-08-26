@@ -1,5 +1,5 @@
 import "./App.css";
-// import { Profile } from './pages/profile/Profile';
+import { Profile } from './pages/profile/Profile';
 
 import { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -59,6 +59,7 @@ export default function App() {
               />
             }
           />
+          <Route path="/profile" element={<Profile/>}/>
         </Routes>
       </main>
     </section>

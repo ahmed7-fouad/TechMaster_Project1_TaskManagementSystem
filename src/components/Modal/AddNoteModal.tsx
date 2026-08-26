@@ -38,12 +38,14 @@ export default function AddNoteModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl w-full max-w-lg shadow-xl overflow-hidden animate-in fade-in zoom-in duration-200">
-        <div className="flex items-center justify-between p-5 border-b border-gray-100">
-          <h3 className="text-lg font-bold text-gray-800">Add New Note</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-lg shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 animate-in fade-in zoom-in duration-200">
+        <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-gray-700">
+          <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">
+            Add New Note
+          </h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 font-semibold text-xl leading-none cursor-pointer"
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 font-semibold text-xl leading-none cursor-pointer transition-colors"
           >
             &times;
           </button>
@@ -51,7 +53,7 @@ export default function AddNoteModal({
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">
+            <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
               Title
             </label>
             <input
@@ -60,18 +62,18 @@ export default function AddNoteModal({
               placeholder="Note title..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-indigo-600"
+              className="w-full p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-transparent text-gray-800 dark:text-gray-100 outline-none focus:border-indigo-600 dark:focus:border-indigo-500 transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">
+            <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
               Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-indigo-600 bg-white"
+              className="w-full p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg text-sm outline-none focus:border-indigo-600 dark:focus:border-indigo-500 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 transition-colors"
             >
               <option value="Work">Work</option>
               <option value="Ideas">Ideas</option>
@@ -81,7 +83,7 @@ export default function AddNoteModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">
+            <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
               Content
             </label>
             <textarea
@@ -90,11 +92,11 @@ export default function AddNoteModal({
               placeholder="Write your note content here..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full p-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-indigo-600 resize-none"
+              className="w-full p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-transparent text-gray-800 dark:text-gray-100 outline-none focus:border-indigo-600 dark:focus:border-indigo-500 resize-none transition-colors"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-3 border-t border-gray-100">
+          <div className="flex justify-end gap-3 pt-3 border-t border-gray-100 dark:border-gray-700">
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>

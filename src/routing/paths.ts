@@ -5,5 +5,6 @@ export const PATHS = {
     TASKS: "tasks",
     NOTES: "notes",
     RESOURCES: "resources",
+    PROFILE: "profile",
   },
 } as const;

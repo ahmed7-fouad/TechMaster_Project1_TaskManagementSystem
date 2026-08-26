@@ -81,9 +81,9 @@ export const TasksDataProvider=({children}:{children:ReactNode})=>{
       allInProgressTasksNumber?: number;
       allPendingTasksNumber?:number,
       addTask?: (taskObj: taskCardData) => void;
-      deleteTask: (taskId: string | number) => void;
-      editTask: (taskId: string | number, taskObj: taskCardData) => void;
-      updateTasks: (tasksList: taskCardData[]) => void;
+      deleteTask?: (taskId: string | number) => void;
+      editTask?: (taskId: string | number, taskObj: taskCardData) => void;
+      updateTasks?: (tasksList: taskCardData[]) => void;
     }
     
     const tasksProviderData: providerDataTypes = {

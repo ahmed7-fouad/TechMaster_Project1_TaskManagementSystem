@@ -29,10 +29,6 @@ export const Profile = () => {
     <section className="flex w-full min-h-screen bg-[#f3f4f6] dark:bg-[#111827]">
 
       <div className="w-full max-w-4xl mx-auto p-4 sm:p-5 lg:p-6 flex flex-col gap-4">
-        <div className="flex flex-col items-start gap-1 w-full">
-          <h2 className="text-[24px] font-bold">Profile</h2>
-          <p className="text-[#6B7280] dark:text-gray-400 text-[14px]">Manage your account information</p>
-        </div>
 
         <Profilecard
           user={user}

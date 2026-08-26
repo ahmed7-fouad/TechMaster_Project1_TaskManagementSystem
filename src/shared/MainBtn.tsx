@@ -1,28 +1,32 @@
 import { cn } from "../lib/utils";
-import type { ReactNode } from "react";
+import type { ReactElement } from "react";
+import { Menu } from "lucide-react";
 
 interface btnData {
   icon?: ReactNode;
   title?: string;
   btnColor?: string;
   btnContentColor?: string;
-  onClick?: () => void;
+  handleClick?: () => void;
+  getTaskIdAndTheme:(id:number|string,theme:string)=>void;
 }
-
 const MainBtn = ({
   icon,
   title,
-  btnColor = "bg-indigo-600 hover:bg-indigo-700",
-  btnContentColor = "text-white",
-  onClick,
+  btnColor,
+  btnContentColor,
+  handleClick,
+  getTaskIdAndTheme,
 }: btnData) => {
   return (
     <button
-      onClick={onClick}
+      style={{ backgroundColor: btnColor, color: btnContentColor }}
+      onClick={()=>{
+        handleClick()
+        getTaskIdAndTheme(-1,"task");
+      }}
       className={cn(
-        "flex items-center gap-2 md:gap-3 p-2 px-3 md:p-3 rounded-lg font-semibold capitalize text-sm md:text-xl cursor-pointer duration-150 transition-colors",
-        btnColor,
-        btnContentColor,
+        "flex items-center gap-3 p-2 lg:p-3 rounded-lg font-semibold capitalize text-md lg:text-xl cursor-pointer hover:bg-thirdc! duration-150",
       )}
     >
       {icon}

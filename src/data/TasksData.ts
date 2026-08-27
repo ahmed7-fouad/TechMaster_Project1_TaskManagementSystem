@@ -6,6 +6,8 @@ export interface taskCardData {
   date?: string;
   completed?: boolean;
   iconsState?:boolean;
+  resource?:string;
+  note?:string;
 }
 
 

@@ -9,7 +9,6 @@ import useTheme from "./hooks/useTheme";
 
 import { NotesProvider } from "./context/NotesContext";
 import { ResourcesProvider } from "./context/ResourcesContext";
-
 function App() {
   useTheme();
 
@@ -34,7 +33,6 @@ function App() {
       setcurrentTheme("task");
     }
   }, [currentLocation]);
-
   function handleDialogAppearance() {
     setDialogState(!dialogState);
   }
@@ -43,7 +41,14 @@ function App() {
     if (id !== -1) {
       setcurrentClickedTaskId(id);
     }
-    if (theme) setcurrentTheme(theme);
+    if(theme){
+      setcurrentTheme(theme);
+    }else{
+      if (dialogThemeState) {
+        setcurrentTheme(dialogThemeState);
+      } 
+    }
+    
   }
 
   function handleSideBarToggle() {

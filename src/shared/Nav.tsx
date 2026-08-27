@@ -11,10 +11,8 @@ interface NavData {
   icon?: ReactElement;
   btnContentColor?: string;
   handleDialog: () => void;
-  getTaskIdAndTheme?: (id: number | string, theme: string) => void;
-  handleSideBarToggle: () => void;
-  setIsNotesModalOpen?: (open: boolean) => void;
-  setIsResourcesModalOpen?: (open: boolean) => void;
+  getTaskIdAndTheme: (id: number | string, theme: string) => void;
+  handleSideBarToggle:()=>void;
 }
 
 const Nav = ({

@@ -41,14 +41,13 @@ function App() {
     if (id !== -1) {
       setcurrentClickedTaskId(id);
     }
-    if(theme){
+    if (theme) {
       setcurrentTheme(theme);
-    }else{
+    } else {
       if (dialogThemeState) {
         setcurrentTheme(dialogThemeState);
-      } 
+      }
     }
-    
   }
 
   function handleSideBarToggle() {

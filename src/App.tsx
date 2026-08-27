@@ -8,30 +8,38 @@ import MainBtn from "./shared/MainBtn";
 import TasksBar from "./components/TasksBar";
 import TaskDialog from "./shared/TaskDialog";
 import { useLocation } from "react-router-dom";
-
 import { Outlet } from "react-router-dom";
 function App() {
   const [dialogState, setDialogState] = useState(false);
   const [currentClickedTaskId, setcurrentClickedTaskId] = useState(0);
   const [currentTheme, setcurrentTheme] = useState("task");
   const [sideBarToggle, setSideBarToggle] = useState(false);
+  const location = useLocation();
+  const currentLocation = location.pathname;
+  const dialogThemeState=currentLocation.slice(1);
   function handleDialogAppearance() {
     setDialogState(!dialogState);
   }
 
-  function getTaskIdAndTheme(id = -1, theme) {
+  function getTaskIdAndTheme(id = -1,theme) {
     if (id !== -1) {
       setcurrentClickedTaskId(id);
     }
-    if (theme) setcurrentTheme(theme);
+    if(theme){
+      setcurrentTheme(theme);
+    }else{
+      if (dialogThemeState) {
+        setcurrentTheme(dialogThemeState);
+      } 
+    }
+    
   }
 
   function handleSideBarToggle() {
     setSideBarToggle(!sideBarToggle);
   }
 
-  const location = useLocation();
-  const currentLocation = location.pathname;
+  ;
 
   let navContentData = {
     title: "",

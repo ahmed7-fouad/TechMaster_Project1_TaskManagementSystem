@@ -10,7 +10,7 @@ interface navData {
   icon?: ReactElement;
   btnContentColor?: string;
   handleDialog: () => void;
-  getTaskIdAndTheme: (id: number | string, theme: string) => void;
+  getTaskIdAndTheme: (id?: number | string, theme?: string) => void;
   handleSideBarToggle:()=>void;
 }
 

@@ -134,7 +134,7 @@ const DashBoard = () => {
         })}
       </section>
 
-      <section className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5 mb-7">
+      <section className="grid grid-cols-[repeat(auto-fit,minmax(370px,1fr))] gap-5 mb-7">
         {/* Tasks Chart */}
         <MainTasksCard title="tasks overview" cardHeight="33rem">
           <Card className="flex flex-col">
@@ -184,7 +184,7 @@ const DashBoard = () => {
           <h4 className="text-3xl font-bold ">
             "Small steps every day lead to big results."
           </h4>
-          <Flower2 className="absolute size-25 text-secondaryc right-0 bottom-0 " />
+          <Flower2 className="absolute size-25 text-secondaryc right-0 bottom-0 hidden xl:block" />
         </section>
       </MainTasksCard>
     </header>

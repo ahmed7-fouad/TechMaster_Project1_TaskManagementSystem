@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
-import {useState} from "react";
+import {useState,useEffect} from "react";
+import {useLocation} from "react-router-dom"
 import {
   House,
   Logs,
@@ -12,10 +13,11 @@ import type { ReactElement } from "react";
 import { cn } from "../lib/utils";
 
 interface dashboardBtn {
-  id: number;
-  icon: ReactElement;
-  title: string;
-  path: string;
+  id?: number;
+  icon?: ReactElement;
+  title?: string;
+  active?:boolean,
+  path?: string;
 }
 
 const dashboardBtns: dashboardBtn[] = [
@@ -23,30 +25,35 @@ const dashboardBtns: dashboardBtn[] = [
     id: 1,
     icon: <House />,
     title: "dashboard",
+    active:false,
     path: "/",
   },
   {
     id: 2,
     icon: <Logs />,
     title: "tasks",
+    active:false,
     path: "/tasks",
   },
   {
     id: 3,
     icon: <File />,
     title: "resources",
+    active:false,
     path: "/resources",
   },
   {
     id: 4,
     icon: <NotebookPen />,
     title: "notes",
+    active:false,
     path: "/notes",
   },
   {
     id: 5,
     icon: <UserRound />,
     title: "profile",
+    active:false,
     path: "/profile",
   },
 ];
@@ -60,7 +67,24 @@ const SideBar = ({
   updateSideBarToggleState:()=>void
 }) => {
   const [activeBoardLinks, setActiveBoardLinks] = useState(dashboardBtns);
+  const path=useLocation();
+  const pathName=path.pathname;
 
+
+ useEffect(()=>{
+    const updatedActiveBtns = activeBoardLinks.map((btn) => {
+      if (
+        pathName == btn.path ||
+        (btn.path === "/" && pathName == "/dashboard")
+      ) {
+        btn.active = true;
+      }
+      return btn;
+    });
+    setActiveBoardLinks(updatedActiveBtns);
+ },[])
+ 
+ 
   function handleActiveBoardLinksClicked(id: number) {
     const updatedActiveLinks = activeBoardLinks.map((lnk) => {
       const tempObj = lnk;

@@ -12,10 +12,11 @@ import type { ReactElement } from "react";
 import { cn } from "../lib/utils";
 
 interface dashboardBtn {
-  id: number;
-  icon: ReactElement;
-  title: string;
-  path: string;
+  id?: number;
+  icon?: ReactElement;
+  title?: string;
+  active?:boolean,
+  path?: string;
 }
 
 const dashboardBtns: dashboardBtn[] = [
@@ -23,30 +24,35 @@ const dashboardBtns: dashboardBtn[] = [
     id: 1,
     icon: <House />,
     title: "dashboard",
+    active:true,
     path: "/",
   },
   {
     id: 2,
     icon: <Logs />,
     title: "tasks",
+    active:false,
     path: "/tasks",
   },
   {
     id: 3,
     icon: <File />,
     title: "resources",
+    active:false,
     path: "/resources",
   },
   {
     id: 4,
     icon: <NotebookPen />,
     title: "notes",
+    active:false,
     path: "/notes",
   },
   {
     id: 5,
     icon: <UserRound />,
     title: "profile",
+    active:false,
     path: "/profile",
   },
 ];

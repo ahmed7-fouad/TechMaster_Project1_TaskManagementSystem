@@ -5,10 +5,11 @@ import {
 	Mail,
 	MessageCircle,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 const Home = () => {
 
   return (
-	<main className="relative flex flex-col min-h-screen w-full items-center justify-center overflow-hidden bg-gray-100 px-3 py-8 sm:px-6 lg:px-8">
+	<main className="relative flex flex-col min-h-screen w-full items-center justify-center overflow-hidden bg-gray-100 px-3 py-8 text-gray-900 dark:bg-gray-950 dark:text-gray-100 sm:px-6 lg:px-8">
          
          {/* logo */}
 
@@ -32,10 +33,10 @@ const Home = () => {
 
  				
 
- 					<div className="absolute right-8 top-10 hidden w-44 rotate-[9deg] rounded-xl bg-white/90 p-4 shadow-[0_12px_25px_rgba(0,0,0,0.12)] sm:block">
+					<div className="absolute right-8 top-10 hidden w-44 rotate-[9deg] rounded-xl bg-white/90 p-4 shadow-[0_12px_25px_rgba(0,0,0,0.12)] dark:bg-gray-800 sm:block">
  						<p className="text-[13px] font-medium">Reminders</p>
  						<div className="mt-5 rounded-md border border-[#ececec] bg-[#f8f8f8] p-2.5">
-							<p className="text-[10px] font-medium">Today's Meeting</p>
+							<p className="text-[10px] font-medium dark:text-[#111827]">Today's Meeting</p>
  							<p className="mt-1 text-[8px] text-gray-500">Call with marketing team</p>
  							<div className="mt-3 flex items-center gap-1 text-[8px] text-[#1689ed]"><Clock3 size={10} /> 10:00 - 13:45</div>
 						</div>
@@ -45,15 +46,17 @@ const Home = () => {
 
  					<section className="relative z-10 mx-auto flex max-w-[700px] flex-col items-center px-5 pt-28 text-center sm:pt-32">
 						<div className="mb-6 grid h-16 w-16 grid-cols-2 gap-2 rounded-[18px] bg-white p-4 shadow-[0_12px_24px_rgba(0,0,0,0.12)] sm:mb-7">
- 							<span className="rounded-full bg-[#7C13ED]" /><span className="rounded-full bg-[#27282c]" />
-							<span className="rounded-full bg-[#27282c]" /><span className="rounded-full bg-[#27282c]" />
+ 							<span className="rounded-full bg-[#7C13ED]" /><span className="rounded-full bg-[#27282c] dark:bg-[#fff]" />
+							<span className="rounded-full bg-[#27282c] dark:bg-[#fff]" /><span className="rounded-full bg-[#27282c] dark:bg-[#fff]" />
  						</div>
 						<h1 className="max-w-[680px] px-2 text-[clamp(2.5rem,8vw,4.625rem)] font-normal leading-[1.04] tracking-[-0.065em]">Think, plan, and track <span className="block text-[#a7a7a9]">all in one place</span></h1>
- 						<p className="mt-7 text-[13px] text-[#48484d] sm:mt-8 sm:text-[14px]">Efficiently manage your tasks and boost productivity.</p>
+ 						<p className="mt-7 text-[13px] text-[#48484d] sm:mt-8 sm:text-[14px] dark:text-[#fff]">Efficiently manage your tasks and boost productivity.</p>
+            <Link to="/dashboard" className="cursor-pointer">
  						<button className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#1689ed] px-6 py-3.5 text-[12px] font-medium text-white shadow-[0_8px_15px_rgba(22,137,237,0.2)] transition hover:bg-[#0879dc]">Get free demo <ArrowRight size={14} /></button>
+            </Link>
  					</section>
 
- 					<div className="absolute bottom-0 left-8  w-56 -rotate-3 rounded-xl border border-[#dce0e3] bg-[#f4f5f6] p-4 shadow-[0_10px_22px_rgba(0,0,0,0.1)] sm:block sm:bottom-12">
+					<div className="absolute bottom-0 left-8  w-56 -rotate-3 rounded-xl border border-[#dce0e3] bg-[#f4f5f6] p-4 shadow-[0_10px_22px_rgba(0,0,0,0.1)] dark:border-gray-700 dark:bg-gray-800 sm:block sm:bottom-12">
  						<p className="text-[11px] font-medium">Today's tasks</p>
  						<div className="mt-3 space-y-2.5">
 							{["New ideas for campaign", "Design PPT #4"].map((task, index) => (
@@ -65,7 +68,7 @@ const Home = () => {
 						</div>
 					</div>
 
- 					<div className="absolute bottom-10 right-8 hidden w-56 rotate-3 rounded-xl border border-[#dce0e3] bg-[#f4f5f6] p-4 shadow-[0_10px_22px_rgba(0,0,0,0.1)] sm:block">
+					<div className="absolute bottom-10 right-8 hidden w-56 rotate-3 rounded-xl border border-[#dce0e3] bg-[#f4f5f6] p-4 shadow-[0_10px_22px_rgba(0,0,0,0.1)] dark:border-gray-700 dark:bg-gray-800 sm:block">
  						<p className="text-[11px] font-medium">100+ Integrations</p>
  						<div className="mt-5 flex items-center justify-center gap-1">
  							<span className="grid h-14 w-14 -rotate-6 place-items-center rounded-xl bg-white shadow-md"><Mail size={29} className="text-[#ea4335]" /></span>

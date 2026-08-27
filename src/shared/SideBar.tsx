@@ -26,7 +26,7 @@ const dashboardBtns: dashboardBtn[] = [
     icon: <House />,
     title: "dashboard",
     active:false,
-    path: "/",
+    path: "/dashboard",
   },
   {
     id: 2,
@@ -120,7 +120,7 @@ const SideBar = ({
           // Link Tag Here
           return (
             <Link
-              to={`/${btn.title}`}
+              to={btn.path ?? "/"}
               key={btn.id}
               onClick={() => handleActiveBoardLinksClicked(btn.id)}
               className={cn(

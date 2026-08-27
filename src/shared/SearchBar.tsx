@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const SearchBar = ({ handleSearchProcess,searchQuery}:{handleSearchProcess?:(data:string)=>void,searchQuery?:string}) => {
   return (
-    <Field orientation="horizontal" className="w-[23rem] bg-[#eaeaea]">
+    <Field orientation="horizontal" className="w-[23rem] bg-[#eaeaea] dark:border-gray dark:text-[#1d1d1d]">
       <Input
         type="search"
         placeholder="Search..."

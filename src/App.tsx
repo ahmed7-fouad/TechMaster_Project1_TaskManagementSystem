@@ -8,9 +8,11 @@ import MainBtn from "./shared/MainBtn";
 import TasksBar from "./components/TasksBar";
 import TaskDialog from "./shared/TaskDialog";
 import { useLocation } from "react-router-dom";
+import useTheme from "./hooks/useTheme";
 
 import { Outlet } from "react-router-dom";
 function App() {
+  useTheme();
   const [dialogState, setDialogState] = useState(false);
   const [currentClickedTaskId, setcurrentClickedTaskId] = useState(0);
   const [currentTheme, setcurrentTheme] = useState("task");
@@ -41,6 +43,7 @@ function App() {
 
   switch (currentLocation) {
     case "/":
+      break;
     case "/dashboard":
       navContentData.title = "dashboard";
       navContentData.subTitle = "Good to see you again, Ahmed! 👋";
@@ -66,35 +69,46 @@ function App() {
       break;
   }
   return (
-    <>
-      <TaskDialog
-        taskId={currentClickedTaskId}
-        theme={currentTheme}
-        dialogState={dialogState}
-        setDialogState={setDialogState}
-      />
+  <>
+    <TaskDialog
+      taskId={currentClickedTaskId}
+      theme={currentTheme}
+      dialogState={dialogState}
+      setDialogState={setDialogState}
+    />
 
-      <section className="lg:grid lg:grid-cols-[21rem_1fr]">
+    {currentLocation === "/" ? (
+      // Home Page
+      <main className="min-h-screen w-full">
+        <Outlet
+          context={{
+            getTaskIdAndTheme,
+            handleDialogAppearance,
+          }}
+        />
+      </main>
+    ) : (
+      // Dashboard / Tasks / Resources / Profile / Notes
+      <section className="lg:grid lg:grid-cols-[21rem_1fr] min-h-screen">
         <SideBar
           sideBarToggleState={sideBarToggle}
           updateSideBarToggleState={handleSideBarToggle}
         />
-        <section>
-          <section>
-            <Nav
-              handleDialog={handleDialogAppearance}
-              getTaskIdAndTheme={getTaskIdAndTheme}
-              btnColor="var(--secondaryc)"
-              btnContentColor="whitesmoke"
-              icon={<Plus />}
-              title={navContentData.title}
-              desc={navContentData.subTitle}
-              btnContent={navContentData.btnContent || null}
-              handleSideBarToggle={handleSideBarToggle}
-            />
-          </section>
 
-          <section className="main-container  mt-11">
+        <section>
+          <Nav
+            handleDialog={handleDialogAppearance}
+            getTaskIdAndTheme={getTaskIdAndTheme}
+            btnColor="var(--secondaryc)"
+            btnContentColor="whitesmoke"
+            icon={<Plus />}
+            title={navContentData.title}
+            desc={navContentData.subTitle}
+            btnContent={navContentData.btnContent || null}
+            handleSideBarToggle={handleSideBarToggle}
+          />
+
+          <section className="main-container mt-11">
             <Outlet
               context={{
                 getTaskIdAndTheme,
@@ -104,7 +118,8 @@ function App() {
           </section>
         </section>
       </section>
-    </>
-  );
+    )}
+  </>
+);
 }
 export default App;

@@ -1,7 +1,7 @@
 export const PATHS = {
   MAIN: "/",
   DASHBOARD_CHILDREN: {
-    DASHBOARD: "/dashboard",
+    DASHBOARD: "dashboard",
     TASKS: "tasks",
     NOTES: "notes",
     RESOURCES: "resources",

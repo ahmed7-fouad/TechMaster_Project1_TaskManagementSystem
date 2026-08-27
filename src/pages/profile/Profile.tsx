@@ -26,7 +26,7 @@ export const Profile = () => {
   }
 
   return (
-    <section className="flex w-full min-h-screen bg-[#f3f4f6] dark:bg-[#111827]">
+    <section className="flex w-full min-h-screen  dark:bg-[#111827]">
 
       <div className="w-full max-w-4xl mx-auto p-4 sm:p-5 lg:p-6 flex flex-col gap-4">
 

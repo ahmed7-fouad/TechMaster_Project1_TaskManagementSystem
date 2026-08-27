@@ -146,7 +146,7 @@ const TaskDialog = ({
   return (
     <Dialog open={dialogState} onOpenChange={setDialogState}>
       <form>
-        <DialogContent className="sm:max-w-sm bg-white">
+        <DialogContent className="sm:max-w-sm bg-white dark:text-[#1d1d1d]">
             <DialogHeader>
               <DialogTitle className="capitalize">
                 {dialogData.title}
@@ -159,7 +159,7 @@ const TaskDialog = ({
           {(theme == "task" || theme == "update") && (
             <FieldGroup>
               <Field>
-                <Label htmlFor="name-1" className="capitalize">
+                <Label htmlFor="name-1" className="capitalize dark:text-[#1d1d1d]">
                   task title
                 </Label>
                 <Input
@@ -188,7 +188,7 @@ const TaskDialog = ({
                       })
                     }
                   >
-                    <Label htmlFor="name-3" className="capitalize block mb-3">
+                    <Label htmlFor="name-3" className="capitalize block mb-3 ">
                       status
                     </Label>
                     <SelectTrigger className="w-full max-w-48">

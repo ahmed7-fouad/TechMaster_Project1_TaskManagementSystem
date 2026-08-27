@@ -5,6 +5,7 @@ import DashBoard from "@/components/DashBoard";
 import { PATHS } from "./paths";
 import Notes from "@/pages/notes/Notes";
 import Resources from "@/pages/Resources/Resources";
+import Home from "@/pages/Home/Home";
 import { Profile } from "@/pages/profile/Profile";
 import Notfound from "@/components/Notfound";
 export const router = createBrowserRouter([
@@ -14,7 +15,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashBoard />,
+        element: <Home />,
       },
       {
         path: PATHS.DASHBOARD_CHILDREN.DASHBOARD,

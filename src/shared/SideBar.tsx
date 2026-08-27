@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
-import {useState} from "react";
+import {useState,useEffect} from "react";
+import {useLocation} from "react-router-dom"
 import {
   House,
   Logs,
@@ -24,7 +25,7 @@ const dashboardBtns: dashboardBtn[] = [
     id: 1,
     icon: <House />,
     title: "dashboard",
-    active:true,
+    active:false,
     path: "/",
   },
   {
@@ -66,7 +67,24 @@ const SideBar = ({
   updateSideBarToggleState:()=>void
 }) => {
   const [activeBoardLinks, setActiveBoardLinks] = useState(dashboardBtns);
+  const path=useLocation();
+  const pathName=path.pathname;
 
+
+ useEffect(()=>{
+    const updatedActiveBtns = activeBoardLinks.map((btn) => {
+      if (
+        pathName == btn.path ||
+        (btn.path === "/" && pathName == "/dashboard")
+      ) {
+        btn.active = true;
+      }
+      return btn;
+    });
+    setActiveBoardLinks(updatedActiveBtns);
+ },[])
+ 
+ 
   function handleActiveBoardLinksClicked(id: number) {
     const updatedActiveLinks = activeBoardLinks.map((lnk) => {
       const tempObj = lnk;

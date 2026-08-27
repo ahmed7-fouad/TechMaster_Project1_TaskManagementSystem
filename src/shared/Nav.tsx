@@ -1,8 +1,9 @@
-import type { ReactNode } from "react";
+import type { ReactElement } from "react";
+import { useLocation } from "react-router-dom";
 import MainBtn from "./MainBtn";
-import { Menu } from "lucide-react";
+import { Menu, Plus } from "lucide-react";
 
-interface navData {
+interface NavData {
   title?: string;
   desc?: string;
   btnColor?: string;
@@ -10,8 +11,10 @@ interface navData {
   icon?: ReactElement;
   btnContentColor?: string;
   handleDialog: () => void;
-  getTaskIdAndTheme: (id: number | string, theme: string) => void;
-  handleSideBarToggle:()=>void;
+  getTaskIdAndTheme?: (id: number | string, theme: string) => void;
+  handleSideBarToggle: () => void;
+  setIsNotesModalOpen?: (open: boolean) => void;
+  setIsResourcesModalOpen?: (open: boolean) => void;
 }
 
 const Nav = ({
@@ -24,15 +27,26 @@ const Nav = ({
   handleDialog,
   getTaskIdAndTheme,
   handleSideBarToggle,
-}: navData) => {
+  setIsNotesModalOpen,
+  setIsResourcesModalOpen,
+}: NavData) => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const isNotesPage = currentPath.includes("/notes");
+  const isResourcesPage = currentPath.includes("/resources");
+
   return (
     <nav className="">
-      <section className="main-container  flex  flex-row justify-between items-center flex-wrap gap-5 py-5 ">
+      <section className="main-container flex flex-row justify-between items-center flex-wrap gap-5 py-5">
         <section className="flex items-center">
-          <Menu className="visible lg:hidden cursor-pointer size-7  bggreen-500 me-5" onClick={handleSideBarToggle}/>
+          <Menu
+            className="visible lg:hidden cursor-pointer size-7 me-5 text-gray-700 dark:text-gray-200"
+            onClick={handleSideBarToggle}
+          />
 
           <section>
-            <h1 className="text-3xl lg:text-4xl capitalize font-semibold mb-3">
+            <h1 className="text-3xl lg:text-4xl capitalize font-semibold mb-3 text-gray-900 dark:text-white">
               {title}
             </h1>
             {desc && (
@@ -43,21 +57,40 @@ const Nav = ({
           </section>
         </section>
 
-        {btnContent && icon && (
+        {isNotesPage ? (
           <MainBtn
-            btnContentColor={btnContentColor}
-            icon={icon}
-            title={btnContent}
-            btnColor={btnColor}
-            handleClick={handleDialog}
-            getTaskIdAndTheme={getTaskIdAndTheme}
+            title="Add Note"
+            icon={<Plus size={18} />}
+            handleClick={() => setIsNotesModalOpen && setIsNotesModalOpen(true)}
+            btnColor="var(--secondaryc)"
+            btnContentColor="whitesmoke"
           />
+        ) : isResourcesPage ? (
+          <MainBtn
+            title="Add Resource"
+            icon={<Plus size={18} />}
+            handleClick={() =>
+              setIsResourcesModalOpen && setIsResourcesModalOpen(true)
+            }
+            btnColor="var(--secondaryc)"
+            btnContentColor="whitesmoke"
+          />
+        ) : (
+          btnContent &&
+          icon && (
+            <MainBtn
+              btnContentColor={btnContentColor}
+              icon={icon}
+              title={btnContent}
+              btnColor={btnColor}
+              handleClick={handleDialog}
+              getTaskIdAndTheme={getTaskIdAndTheme}
+            />
+          )
         )}
       </section>
     </nav>
   );
 };
-
-    
 
 export default Nav;

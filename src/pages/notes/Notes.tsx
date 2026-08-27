@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import SearchInput from "../../components/Input/Input";
 import AddNoteModal from "../../components/Modal/AddNoteModal";
 
@@ -11,11 +12,19 @@ export interface Note {
 }
 
 interface NotesProps {
-  isModalOpen: boolean;
-  setIsModalOpen: (open: boolean) => void;
+  isModalOpen?: boolean;
+  setIsModalOpen?: (open: boolean) => void;
+}
+
+interface AppOutletContext {
+  isNotesModalOpen: boolean;
+  setIsNotesModalOpen: (open: boolean) => void;
 }
 
 export default function Notes({ isModalOpen, setIsModalOpen }: NotesProps) {
+  const outletContext = useOutletContext<AppOutletContext>();
+  const modalOpen = isModalOpen ?? outletContext.isNotesModalOpen;
+  const closeModal = setIsModalOpen ?? outletContext.setIsNotesModalOpen;
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const [notes, setNotes] = useState<Note[]>(() => {
@@ -105,8 +114,8 @@ export default function Notes({ isModalOpen, setIsModalOpen }: NotesProps) {
         </div>
 
         <AddNoteModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          isOpen={modalOpen}
+          onClose={() => closeModal(false)}
           onAddNote={handleAddNote}
         />
       </section>

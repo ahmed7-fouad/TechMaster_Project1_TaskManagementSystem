@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import {
   FileText,
   PenTool,
@@ -8,56 +9,38 @@ import {
   Folder,
 } from "lucide-react";
 import SearchInput from "../../components/Input/Input";
-
-export interface Resource {
-  id: number;
-  title: string;
-  source: string;
-  category: "Document" | "Design" | "API" | "Development";
-}
-
-const INITIAL_RESOURCES: Resource[] = [
-  {
-    id: 1,
-    title: "Project Requirements",
-    source: "Google Docs",
-    category: "Document",
-  },
-  { id: 2, title: "Design System", source: "Figma", category: "Design" },
-  { id: 3, title: "API Documentation", source: "Postman", category: "API" },
-  {
-    id: 4,
-    title: "UI Components",
-    source: "Storybook",
-    category: "Development",
-  },
-];
+import AddResourceModal from "../../components/Modal/AddResourceModal";
+import { useResources, type Resource } from "../../context/ResourcesContext";
 
 interface ResourcesProps {
-  isModalOpen: boolean;
-  setIsModalOpen: (open: boolean) => void;
+  isModalOpen?: boolean;
+  setIsModalOpen?: (open: boolean) => void;
+}
+
+interface AppOutletContext {
+  isResourcesModalOpen: boolean;
+  setIsResourcesModalOpen: (open: boolean) => void;
 }
 
 export default function Resources({
   isModalOpen,
   setIsModalOpen,
 }: ResourcesProps) {
-  const [resources, setResources] = useState<Resource[]>(() => {
-    const saved = localStorage.getItem("resources");
-    return saved ? JSON.parse(saved) : INITIAL_RESOURCES;
-  });
+  const outletContext = useOutletContext<AppOutletContext>();
+  const modalOpen = isModalOpen ?? outletContext.isResourcesModalOpen;
+  const closeModal = setIsModalOpen ?? outletContext.setIsResourcesModalOpen;
+  const { resources, addResource, deleteResource } = useResources();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
 
-  const [newTitle, setNewTitle] = useState("");
-  const [newSource, setNewSource] = useState("");
-  const [newCategory, setNewCategory] =
-    useState<Resource["category"]>("Document");
-
-  useEffect(() => {
-    localStorage.setItem("resources", JSON.stringify(resources));
-  }, [resources]);
+  const handleAddResource = (newResData: {
+    title: string;
+    source: string;
+    category: "Document" | "Design" | "API" | "Development";
+  }) => {
+    addResource(newResData.title, newResData.source, newResData.category);
+  };
 
   const getCategoryConfig = (category: Resource["category"]) => {
     switch (category) {
@@ -101,27 +84,6 @@ export default function Resources({
           badgeBg: "bg-teal-50 dark:bg-teal-950/40",
         };
     }
-  };
-
-  const handleAddResource = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newTitle.trim() || !newSource.trim()) return;
-
-    const newRes: Resource = {
-      id: Date.now(),
-      title: newTitle,
-      source: newSource,
-      category: newCategory,
-    };
-
-    setResources([newRes, ...resources]);
-    setNewTitle("");
-    setNewSource("");
-    setIsModalOpen(false);
-  };
-
-  const handleDeleteResource = (id: number) => {
-    setResources(resources.filter((res) => res.id !== id));
   };
 
   const filteredResources = resources.filter((res) => {
@@ -177,9 +139,9 @@ export default function Resources({
                     >
                       <div className="flex items-center gap-4">
                         <div
-                          className={`w-12 h-12 rounded-xl flex items-center justify-center ${config.iconBg}`}
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center ${config?.iconBg}`}
                         >
-                          {config.icon}
+                          {config?.icon}
                         </div>
                         <div>
                           <h4 className="font-semibold text-gray-800 dark:text-gray-100">
@@ -193,12 +155,12 @@ export default function Resources({
 
                       <div className="flex items-center gap-3">
                         <span
-                          className={`text-xs font-medium px-3 py-1 rounded-full ${config.badgeBg} ${config.badgeText}`}
+                          className={`text-xs font-medium px-3 py-1 rounded-full ${config?.badgeBg} ${config?.badgeText}`}
                         >
                           {item.category}
                         </span>
                         <button
-                          onClick={() => handleDeleteResource(item.id)}
+                          onClick={() => deleteResource(item.id)}
                           className="text-gray-400 hover:text-red-500 dark:hover:text-red-400 p-1 transition-colors cursor-pointer"
                           title="Delete resource"
                         >
@@ -271,80 +233,15 @@ export default function Resources({
             </div>
           </div>
         </div>
-
-        {isModalOpen && (
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 space-y-5 shadow-xl border border-gray-100 dark:border-gray-700">
-              <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">
-                Add New Resource
-              </h3>
-              <form onSubmit={handleAddResource} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
-                    Title
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Project Specs"
-                    value={newTitle}
-                    onChange={(e) => setNewTitle(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-transparent text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
-                    Source / Platform
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Google Drive, Notion, Figma"
-                    value={newSource}
-                    onChange={(e) => setNewSource(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-transparent text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">
-                    Category
-                  </label>
-                  <select
-                    value={newCategory}
-                    onChange={(e) =>
-                      setNewCategory(e.target.value as Resource["category"])
-                    }
-                    className="w-full px-3 py-2 border rounded-lg text-sm bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  >
-                    <option value="Document">Document</option>
-                    <option value="Design">Design</option>
-                    <option value="API">API</option>
-                    <option value="Development">Development</option>
-                  </select>
-                </div>
-
-                <div className="flex justify-end gap-3 pt-3">
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg cursor-pointer transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg cursor-pointer transition-colors"
-                  >
-                    Save Resource
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
       </div>
+
+      <AddResourceModal
+        isOpen={modalOpen}
+        onClose={() => closeModal(false)}
+        onAddResource={handleAddResource}
+      />
     </div>
   );
 }
+
+export { Resources };

@@ -26,11 +26,11 @@ export const router = createBrowserRouter([
       },
       {
         path: PATHS.DASHBOARD_CHILDREN.NOTES,
-        element: <Notes isModalOpen={false} setIsModalOpen={() => {}} />,
+        element: <Notes />,
       },
       {
         path: PATHS.DASHBOARD_CHILDREN.RESOURCES,
-        element: <Resources isModalOpen={false} setIsModalOpen={() => {}} />,
+        element: <Resources />,
       },
       {
         path: PATHS.DASHBOARD_CHILDREN.PROFILE,

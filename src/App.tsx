@@ -1,25 +1,45 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SideBar from "./shared/SideBar";
 import Nav from "./shared/Nav";
 import { Plus } from "lucide-react";
-import SearchBar from "./shared/SearchBar";
-import MainBtn from "./shared/MainBtn";
-import TasksBar from "./components/TasksBar";
 import TaskDialog from "./shared/TaskDialog";
-import { useLocation } from "react-router-dom";
+import { useLocation, Outlet } from "react-router-dom";
+import useTheme from "./hooks/useTheme";
 
-import { Outlet } from "react-router-dom";
+import { NotesProvider } from "./context/NotesContext";
+import { ResourcesProvider } from "./context/ResourcesContext";
+
 function App() {
+  useTheme();
+
   const [dialogState, setDialogState] = useState(false);
-  const [currentClickedTaskId, setcurrentClickedTaskId] = useState(0);
+  const [currentClickedTaskId, setcurrentClickedTaskId] = useState<
+    number | string
+  >(0);
   const [currentTheme, setcurrentTheme] = useState("task");
   const [sideBarToggle, setSideBarToggle] = useState(false);
+  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
+  const [isResourcesModalOpen, setIsResourcesModalOpen] = useState(false);
+
+  const location = useLocation();
+  const currentLocation = location.pathname;
+
+  useEffect(() => {
+    if (currentLocation.includes("/notes")) {
+      setcurrentTheme("note");
+    } else if (currentLocation.includes("/resources")) {
+      setcurrentTheme("resource");
+    } else {
+      setcurrentTheme("task");
+    }
+  }, [currentLocation]);
+
   function handleDialogAppearance() {
     setDialogState(!dialogState);
   }
 
-  function getTaskIdAndTheme(id = -1, theme) {
+  function getTaskIdAndTheme(id: number | string = -1, theme: string) {
     if (id !== -1) {
       setcurrentClickedTaskId(id);
     }
@@ -29,9 +49,6 @@ function App() {
   function handleSideBarToggle() {
     setSideBarToggle(!sideBarToggle);
   }
-
-  const location = useLocation();
-  const currentLocation = location.pathname;
 
   let navContentData = {
     title: "",
@@ -64,47 +81,63 @@ function App() {
       navContentData.subTitle = "Capture your ideas and thoughts";
       navContentData.btnContent = "add note";
       break;
+    default:
+      navContentData.title = "app";
+      navContentData.subTitle = "Welcome";
+      break;
   }
+
   return (
-    <>
-      <TaskDialog
-        taskId={currentClickedTaskId}
-        theme={currentTheme}
-        dialogState={dialogState}
-        setDialogState={setDialogState}
-      />
+    <NotesProvider>
+      <ResourcesProvider>
+        <>
+          <TaskDialog
+            taskId={currentClickedTaskId}
+            theme={currentTheme}
+            dialogState={dialogState}
+            setDialogState={setDialogState}
+          />
 
-      <section className="lg:grid lg:grid-cols-[21rem_1fr]">
-        <SideBar
-          sideBarToggleState={sideBarToggle}
-          updateSideBarToggleState={handleSideBarToggle}
-        />
-        <section>
-          <section>
-            <Nav
-              handleDialog={handleDialogAppearance}
-              getTaskIdAndTheme={getTaskIdAndTheme}
-              btnColor="var(--secondaryc)"
-              btnContentColor="whitesmoke"
-              icon={<Plus />}
-              title={navContentData.title}
-              desc={navContentData.subTitle}
-              btnContent={navContentData.btnContent || null}
-              handleSideBarToggle={handleSideBarToggle}
+          <section className="lg:grid lg:grid-cols-[21rem_1fr]">
+            <SideBar
+              sideBarToggleState={sideBarToggle}
+              updateSideBarToggleState={handleSideBarToggle}
             />
-          </section>
+            <section className="w-full min-h-screen overflow-x-hidden">
+              <section>
+                <Nav
+                  handleDialog={handleDialogAppearance}
+                  getTaskIdAndTheme={getTaskIdAndTheme}
+                  btnColor="var(--secondaryc)"
+                  btnContentColor="whitesmoke"
+                  icon={<Plus />}
+                  title={navContentData.title}
+                  desc={navContentData.subTitle}
+                  btnContent={navContentData.btnContent || undefined}
+                  handleSideBarToggle={handleSideBarToggle}
+                  setIsNotesModalOpen={setIsNotesModalOpen}
+                  setIsResourcesModalOpen={setIsResourcesModalOpen}
+                />
+              </section>
 
-          <section className="main-container  mt-11">
-            <Outlet
-              context={{
-                getTaskIdAndTheme,
-                handleDialogAppearance,
-              }}
-            />
+              <section className="main-container mt-11">
+                <Outlet
+                  context={{
+                    getTaskIdAndTheme,
+                    handleDialogAppearance,
+                    isNotesModalOpen,
+                    setIsNotesModalOpen,
+                    isResourcesModalOpen,
+                    setIsResourcesModalOpen,
+                  }}
+                />
+              </section>
+            </section>
           </section>
-        </section>
-      </section>
-    </>
+        </>
+      </ResourcesProvider>
+    </NotesProvider>
   );
 }
+
 export default App;

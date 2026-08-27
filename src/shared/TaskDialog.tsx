@@ -84,6 +84,8 @@ const TaskDialog = ({
     status: "",
     priority: "",
     date: "",
+    resource:"",
+    note:"",
   });
 
   const { addTask, editTask ,deleteTask} = useAllTasks();
@@ -123,13 +125,13 @@ const TaskDialog = ({
     description: "",
     mainBtnContent: "add",
   };
-  if (theme == "task") {
+  if (theme == "tasks") {
     dialogData.title = "add task";
     dialogData.description = "add your task details here";
-  } else if (theme == "resource") {
+  } else if (theme == "resources") {
     dialogData.title = "add resource";
     dialogData.description = "add your resource details here";
-  } else if (theme == "note") {
+  } else if (theme == "notes") {
     dialogData.title = "add note";
     dialogData.description = "add you note details here";
   } else if (theme == "update") {
@@ -142,21 +144,18 @@ const TaskDialog = ({
     dialogData.mainBtnContent = "delete";
   }
 
-  console.log("The Theme Now Is ",theme)
   return (
     <Dialog open={dialogState} onOpenChange={setDialogState}>
       <form>
         <DialogContent className="sm:max-w-sm bg-white">
-            <DialogHeader>
-              <DialogTitle className="capitalize">
-                {dialogData.title}
-              </DialogTitle>
-              <DialogDescription className="capitalize">
-                {dialogData.description}
-              </DialogDescription>
-            </DialogHeader>
+          <DialogHeader>
+            <DialogTitle className="capitalize">{dialogData.title}</DialogTitle>
+            <DialogDescription className="capitalize">
+              {dialogData.description}
+            </DialogDescription>
+          </DialogHeader>
 
-          {(theme == "task" || theme == "update") && (
+          {(theme == "tasks" || theme == "update") && (
             <FieldGroup>
               <Field>
                 <Label htmlFor="name-1" className="capitalize">
@@ -264,6 +263,47 @@ const TaskDialog = ({
               </Field>
             </FieldGroup>
           )}
+
+          {(theme == "resources" || theme == "notes") && (
+            <FieldGroup>
+              <Field>
+                <Label htmlFor="name-1" className="capitalize">
+                  {theme == "resources" ? "resource" : "note"} title
+                </Label>
+                <Input
+                  id="name-1"
+                  name="name"
+                  defaultValue="task title"
+                  value={dialogDataObj.title}
+                  onChange={(e) => {
+                    setDialogDataObj({
+                      ...dialogDataObj,
+                      title: e.target.value,
+                    });
+                    console.log(dialogDataObj.title);
+                  }}
+                />
+              </Field>
+              <Field>
+                <Label htmlFor="name-1" className="capitalize">
+                  {theme == "resources" ? "resource link" : "note content"} 
+                </Label>
+                <Input
+                  id="name-1"
+                  name="name"
+                  defaultValue="task title"
+                  value={theme == "resources" ? dialogDataObj.resource : dialogDataObj.note} 
+                  onChange={(e) =>
+                    setDialogDataObj({
+                      ...dialogDataObj,
+                      note: e.target.value,
+                    })
+                  }
+                />
+              </Field>
+            </FieldGroup>
+          )}
+
           <DialogFooter>
             <DialogClose asChild>
               <Button

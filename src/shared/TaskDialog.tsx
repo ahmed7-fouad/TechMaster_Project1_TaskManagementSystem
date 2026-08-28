@@ -145,7 +145,7 @@ const TaskDialog = ({
   return (
     <Dialog open={dialogState} onOpenChange={setDialogState}>
       <form>
-        <DialogContent className="sm:max-w-sm border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
+        <DialogContent className="sm:max-w-lg border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
           <DialogHeader>
             <DialogTitle className="capitalize">{dialogData.title}</DialogTitle>
             <DialogDescription className="capitalize dark:text-gray-300">
@@ -195,7 +195,7 @@ const TaskDialog = ({
                     >
                       status
                     </Label>
-                    <SelectTrigger className="w-full max-w-48 border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
+                    <SelectTrigger className="w-full  border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="border-gray-600 bg-gray-700 text-gray-100">
@@ -233,7 +233,7 @@ const TaskDialog = ({
                     >
                       Priority
                     </Label>
-                    <SelectTrigger className="w-full max-w-48 border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
+                    <SelectTrigger className="w-full  border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="border-gray-600 bg-gray-700 text-gray-100">
@@ -332,14 +332,13 @@ const TaskDialog = ({
             <DialogClose asChild>
               <Button
                 variant="outline"
-                className="capitalize border-gray-300 text-gray-700 hover:bg-thirdc hover:text-white duration-150 cursor-pointer dark:border-gray-600 dark:text-gray-200"
-              >
+                className="capitalize border-gray-300 text-gray-700 hover:bg-thirdc hover:text-white duration-150 cursor-pointer dark:border-gray-600 dark:text-gray-200 dark:hover:bg-white dark:hover:text-thirdc hover:bg-thirdc hover:text-white">
                 Cancel
               </Button>
             </DialogClose>
             <Button
               type="submit"
-              className="capitalize hover:bg-thirdc hover:text-white duration-150 cursor-pointer"
+              className="capitalize hover:bg-thirdc hover:text-white duration-150 cursor-pointer bg-secondaryc hover:bg-primaryc text-white"
               onClick={handleAction}
             >
               {dialogData.mainBtnContent}

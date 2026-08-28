@@ -13,8 +13,8 @@ body,
   min-height: 100%;
 }
 
-input{
-  @apply bg-white text-black border-3 border-thirdc dark:border-muted-text
+input,select,button[role="combobox"],textarea{
+  @apply bg-white text-black border-3 border-thirdc dark:border-muted-text dark:border-secondaryc  outline-2! outline-transparent! focus:outline-thirdc! dark:focus:outline-secondaryc
 }
 
 body {

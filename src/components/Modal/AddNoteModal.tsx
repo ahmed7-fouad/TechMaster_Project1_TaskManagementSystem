@@ -97,10 +97,15 @@ export default function AddNoteModal({
           </div>
 
           <div className="flex justify-end gap-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="hover:bg-thirdc hover:text-white duration-150 cursor-pointer dark:border-gray-600 dark:text-gray-200 dark:hover:bg-white dark:hover:text-thirdc hover:bg-thirdc hover:text-white"
+            >
               Cancel
             </Button>
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="primary" className="bg-secondaryc hover:bg-primaryc">
               Save Note
             </Button>
           </div>

@@ -89,7 +89,7 @@ const TaskDialog = ({
   const { addTask, editTask, deleteTask } = useAllTasks();
 
   function handleAction() {
-    if (theme == "task" || theme == "update") {
+    if (theme == "task" || theme == "tasks" || theme == "update") {
       if (!dialogDataObj.title) {
         window.alert("The Task Title Is Missing");
       } else if (!dialogDataObj.status) {
@@ -99,7 +99,7 @@ const TaskDialog = ({
       } else if (!dialogDataObj.date) {
         window.alert("The Task Date Is Missing");
       } else {
-        if (theme == "task") {
+        if (theme == "task" || theme == "tasks") {
           addTask(dialogDataObj);
         } else if (theme == "update") {
           editTask(taskId, dialogDataObj);

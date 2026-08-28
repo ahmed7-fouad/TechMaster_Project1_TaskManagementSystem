@@ -7,7 +7,7 @@ interface btnData {
   btnColor?: string;
   btnContentColor?: string;
   handleClick?: () => void;
-  getTaskIdAndTheme?: (id: number | string, theme: string) => void;
+  getTaskIdAndTheme?: (id?: number | string, theme?: string) => void;
 }
 const MainBtn = ({
   icon,
@@ -22,7 +22,7 @@ const MainBtn = ({
       style={{ backgroundColor: btnColor, color: btnContentColor }}
       onClick={() => {
         handleClick?.();
-        getTaskIdAndTheme?.(-1, "task");
+        getTaskIdAndTheme?.();
       }}
       className={cn(
         "flex items-center gap-3 p-2 lg:p-3 rounded-lg font-semibold capitalize text-md lg:text-xl cursor-pointer hover:bg-thirdc! duration-150",

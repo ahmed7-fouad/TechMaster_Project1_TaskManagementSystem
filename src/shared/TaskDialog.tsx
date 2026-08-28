@@ -2,7 +2,7 @@ const items = [
   { label: "Light", value: "light" },
   { label: "Dark", value: "dark" },
   { label: "System", value: "system" },
-]
+];
 
 import {
   Dialog,
@@ -35,11 +35,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAllTasks } from "@/Providers/ِTasksDataProvider";
 
-import {useState} from "react"
+import { useState } from "react";
 
 // Create Unique Id Using UUID Library
-import { v4 as uuidv4 } from 'uuid'; // Import the uuid generator
- 
+import { v4 as uuidv4 } from "uuid"; // Import the uuid generator
 
 const TaskDialog = ({
   taskId,
@@ -47,12 +46,11 @@ const TaskDialog = ({
   setDialogState,
   theme,
 }: {
-  taskId:string|number,
+  taskId: string | number;
   dialogState?: boolean;
   setDialogState?: (data: boolean) => void;
   theme?: string;
 }) => {
-
   const date = new Date("2026-08-25T12:00:00");
   const ukFormat = new Intl.DateTimeFormat("en-GB").format(date);
 
@@ -84,11 +82,11 @@ const TaskDialog = ({
     status: "",
     priority: "",
     date: "",
-    resource:"",
-    note:"",
+    resource: "",
+    note: "",
   });
 
-  const { addTask, editTask ,deleteTask} = useAllTasks();
+  const { addTask, editTask, deleteTask } = useAllTasks();
 
   function handleAction() {
     if (theme == "task" || theme == "update") {
@@ -104,15 +102,15 @@ const TaskDialog = ({
         if (theme == "task") {
           addTask(dialogDataObj);
         } else if (theme == "update") {
-          editTask(taskId,dialogDataObj);
-            window.alert("Task is updated successfully");
+          editTask(taskId, dialogDataObj);
+          window.alert("Task is updated successfully");
         }
         setDialogState(false);
       }
-    }else if(theme=="delete"){
-        deleteTask(taskId);
-        setDialogState(false);
-        window.alert("Task is deleted successfully");
+    } else if (theme == "delete") {
+      deleteTask(taskId);
+      setDialogState(false);
+      window.alert("Task is deleted successfully");
     }
   }
 
@@ -147,10 +145,10 @@ const TaskDialog = ({
   return (
     <Dialog open={dialogState} onOpenChange={setDialogState}>
       <form>
-        <DialogContent className="sm:max-w-sm bg-white">
+        <DialogContent className="sm:max-w-sm border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
           <DialogHeader>
             <DialogTitle className="capitalize">{dialogData.title}</DialogTitle>
-            <DialogDescription className="capitalize">
+            <DialogDescription className="capitalize dark:text-gray-300">
               {dialogData.description}
             </DialogDescription>
           </DialogHeader>
@@ -158,13 +156,17 @@ const TaskDialog = ({
           {(theme == "tasks" || theme == "update") && (
             <FieldGroup>
               <Field>
-                <Label htmlFor="name-1" className="capitalize">
+                <Label
+                  htmlFor="name-1"
+                  className="capitalize dark:text-gray-200"
+                >
                   task title
                 </Label>
                 <Input
                   id="name-1"
                   name="name"
                   defaultValue="task title"
+                  className="border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
                   value={dialogDataObj.title}
                   onChange={(e) =>
                     setDialogDataObj({
@@ -187,18 +189,21 @@ const TaskDialog = ({
                       })
                     }
                   >
-                    <Label htmlFor="name-3" className="capitalize block mb-3">
+                    <Label
+                      htmlFor="name-3"
+                      className="capitalize block mb-3 dark:text-gray-200"
+                    >
                       status
                     </Label>
-                    <SelectTrigger className="w-full max-w-48">
+                    <SelectTrigger className="w-full max-w-48 border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white">
+                    <SelectContent className="border-gray-600 bg-gray-700 text-gray-100">
                       <SelectGroup>
                         <SelectLabel>Task Status</SelectLabel>
                         {taskStatusChoices.map((item) => (
                           <SelectItem
-                            className="capitalize"
+                            className="capitalize text-gray-100 focus:bg-gray-600 focus:text-white"
                             key={item.value}
                             value={!item.value ? "" : item.value}
                           >
@@ -222,18 +227,21 @@ const TaskDialog = ({
                       })
                     }
                   >
-                    <Label htmlFor="name-3" className="capitalize block mb-3">
+                    <Label
+                      htmlFor="name-3"
+                      className="capitalize block mb-3 dark:text-gray-200"
+                    >
                       Priority
                     </Label>
-                    <SelectTrigger className="w-full max-w-48">
+                    <SelectTrigger className="w-full max-w-48 border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white">
+                    <SelectContent className="border-gray-600 bg-gray-700 text-gray-100">
                       <SelectGroup>
                         <SelectLabel>Task Priority</SelectLabel>
                         {taskPriorityChoices.map((item) => (
                           <SelectItem
-                            className="capitalize"
+                            className="capitalize text-gray-100 focus:bg-gray-600 focus:text-white"
                             key={item.value}
                             value={!item.value ? "" : item.value}
                           >
@@ -247,7 +255,10 @@ const TaskDialog = ({
               </section>
 
               <Field>
-                <Label htmlFor="username-1" className="capitalize">
+                <Label
+                  htmlFor="username-1"
+                  className="capitalize dark:text-gray-200"
+                >
                   date
                 </Label>
                 <Input
@@ -255,6 +266,7 @@ const TaskDialog = ({
                   type="date"
                   name="username"
                   defaultValue={ukFormat}
+                  className="border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
                   value={dialogDataObj.date}
                   onChange={(e) =>
                     setDialogDataObj({ ...dialogDataObj, date: e.target.value })
@@ -267,13 +279,17 @@ const TaskDialog = ({
           {(theme == "resources" || theme == "notes") && (
             <FieldGroup>
               <Field>
-                <Label htmlFor="name-1" className="capitalize">
+                <Label
+                  htmlFor="name-1"
+                  className="capitalize dark:text-gray-200"
+                >
                   {theme == "resources" ? "resource" : "note"} title
                 </Label>
                 <Input
                   id="name-1"
                   name="name"
                   defaultValue="task title"
+                  className="border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
                   value={dialogDataObj.title}
                   onChange={(e) => {
                     setDialogDataObj({
@@ -285,14 +301,22 @@ const TaskDialog = ({
                 />
               </Field>
               <Field>
-                <Label htmlFor="name-1" className="capitalize">
-                  {theme == "resources" ? "resource link" : "note content"} 
+                <Label
+                  htmlFor="name-1"
+                  className="capitalize dark:text-gray-200"
+                >
+                  {theme == "resources" ? "resource link" : "note content"}
                 </Label>
                 <Input
                   id="name-1"
                   name="name"
                   defaultValue="task title"
-                  value={theme == "resources" ? dialogDataObj.resource : dialogDataObj.note} 
+                  className="border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+                  value={
+                    theme == "resources"
+                      ? dialogDataObj.resource
+                      : dialogDataObj.note
+                  }
                   onChange={(e) =>
                     setDialogDataObj({
                       ...dialogDataObj,
@@ -308,7 +332,7 @@ const TaskDialog = ({
             <DialogClose asChild>
               <Button
                 variant="outline"
-                className="capitalize hover:bg-thirdc hover:text-white duration-150 cursor-pointer"
+                className="capitalize border-gray-300 text-gray-700 hover:bg-thirdc hover:text-white duration-150 cursor-pointer dark:border-gray-600 dark:text-gray-200"
               >
                 Cancel
               </Button>

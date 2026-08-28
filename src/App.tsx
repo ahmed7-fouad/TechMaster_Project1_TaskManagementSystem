@@ -23,6 +23,7 @@ function App() {
 
   const location = useLocation();
   const currentLocation = location.pathname;
+  const dialogThemeState = currentLocation.slice(1);
 
   useEffect(() => {
     if (currentLocation.includes("/notes")) {
@@ -37,16 +38,14 @@ function App() {
     setDialogState(!dialogState);
   }
 
-  function getTaskIdAndTheme(id: number | string = -1, theme: string) {
+  function getTaskIdAndTheme(id: number | string = -1, theme?: string) {
     if (id !== -1) {
       setcurrentClickedTaskId(id);
     }
     if (theme) {
       setcurrentTheme(theme);
-    } else {
-      if (dialogThemeState) {
-        setcurrentTheme(dialogThemeState);
-      }
+    } else if (dialogThemeState) {
+      setcurrentTheme(dialogThemeState);
     }
   }
 

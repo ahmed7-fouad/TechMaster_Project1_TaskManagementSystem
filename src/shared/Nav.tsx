@@ -12,7 +12,9 @@ interface NavData {
   btnContentColor?: string;
   handleDialog: () => void;
   getTaskIdAndTheme: (id: number | string, theme: string) => void;
-  handleSideBarToggle:()=>void;
+  handleSideBarToggle: () => void;
+  setIsNotesModalOpen?: (open: boolean) => void;
+  setIsResourcesModalOpen?: (open: boolean) => void;
 }
 
 const Nav = ({

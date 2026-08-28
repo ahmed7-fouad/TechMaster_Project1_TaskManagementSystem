@@ -181,7 +181,7 @@ const DashBoard = () => {
 
       <MainTasksCard bgColor="#E9E6FF" cardHeight="13rem">
         <section className="relative h-full flex items-center">
-          <h4 className="text-3xl font-bold ">
+          <h4 className="text-3xl font-bold dark:text-gray-600">
             "Small steps every day lead to big results."
           </h4>
           <Flower2 className="absolute size-25 text-secondaryc right-0 bottom-0 hidden xl:block" />

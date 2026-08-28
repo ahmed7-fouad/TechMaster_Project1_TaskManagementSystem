@@ -13,6 +13,10 @@ body,
   min-height: 100%;
 }
 
+input{
+  @apply bg-white text-black border-3 border-thirdc dark:border-muted-text
+}
+
 body {
   margin: 0;
   background-color: #f8fafc;

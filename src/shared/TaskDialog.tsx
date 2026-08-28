@@ -34,8 +34,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAllTasks } from "@/Providers/ِTasksDataProvider";
-import { useResources } from '../context/ResourcesContext';
-import { useNotes } from "@/context/NotesContext";
 
 import { useState } from "react";
 
@@ -88,12 +86,8 @@ const TaskDialog = ({
     note: "",
   });
 
-  // Main Crud Functions On All Data
   const { addTask, editTask, deleteTask } = useAllTasks();
-  const { resources, addResource, deleteResource } = useResources();
-  const { deleteNote } = useNotes();
 
-  
   function handleAction() {
     if (theme == "task" || theme == "tasks" || theme == "update") {
       if (!dialogDataObj.title) {
@@ -113,18 +107,10 @@ const TaskDialog = ({
         }
         setDialogState(false);
       }
-    } else if (theme?.startsWith("delete")) {
-      if(theme=="deleteTask"){
-         deleteTask(taskId);
-         window.alert("Task is deleted successfully");
-        }else if (theme=="deleteResource"){
-          deleteResource(taskId);
-          window.alert("Resource is deleted successfully");
-        }else if (theme == "deleteNote"){
-          deleteNote(taskId);
-          window.alert("Note is deleted successfully");
-      }
+    } else if (theme == "delete") {
+      deleteTask(taskId);
       setDialogState(false);
+      window.alert("Task is deleted successfully");
     }
   }
 
@@ -150,22 +136,16 @@ const TaskDialog = ({
     dialogData.title = "edit task";
     dialogData.description = "update the task details here";
     dialogData.mainBtnContent = "update";
-  } else if(theme?.startsWith("delete")){
-    dialogData.title = "deleteing Confirmation";
-     dialogData.mainBtnContent = "delete";
-     if (theme == "deleteTask") {
-      dialogData.description = "Are you sure you want to delete this task?";
-    }else if (theme=="deleteResource"){
-      dialogData.description = "Are you sure you want to delete this resource?";
-    }else if(theme=="deleteNote"){
-      dialogData.description = "Are you sure you want to delete this note?";
-    }
+  } else if (theme == "delete") {
+    dialogData.title = "delete task";
+    dialogData.description = "Are you sure you want to delete this task?";
+    dialogData.mainBtnContent = "delete";
   }
 
   return (
     <Dialog open={dialogState} onOpenChange={setDialogState}>
       <form>
-        <DialogContent className="z-[999] sm:max-w-lg border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
+        <DialogContent className="sm:max-w-sm border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
           <DialogHeader>
             <DialogTitle className="capitalize">{dialogData.title}</DialogTitle>
             <DialogDescription className="capitalize dark:text-gray-300">
@@ -215,10 +195,10 @@ const TaskDialog = ({
                     >
                       status
                     </Label>
-                    <SelectTrigger className="w-full border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
+                    <SelectTrigger className="w-full max-w-48 border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="z-[999] border-gray-600 bg-gray-700 text-gray-100">
+                    <SelectContent className="border-gray-600 bg-gray-700 text-gray-100">
                       <SelectGroup>
                         <SelectLabel>Task Status</SelectLabel>
                         {taskStatusChoices.map((item) => (
@@ -253,10 +233,10 @@ const TaskDialog = ({
                     >
                       Priority
                     </Label>
-                    <SelectTrigger className="w-full border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
+                    <SelectTrigger className="w-full max-w-48 border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="z-[999] border-gray-600 bg-gray-700 text-gray-100">
+                    <SelectContent className="border-gray-600 bg-gray-700 text-gray-100">
                       <SelectGroup>
                         <SelectLabel>Task Priority</SelectLabel>
                         {taskPriorityChoices.map((item) => (
@@ -351,16 +331,15 @@ const TaskDialog = ({
           <DialogFooter>
             <DialogClose asChild>
               <Button
-                type="button"
                 variant="outline"
-                className="hover:bg-thirdc hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-thirdc cursor-pointer"
+                className="capitalize border-gray-300 text-gray-700 hover:bg-thirdc hover:text-white duration-150 cursor-pointer dark:border-gray-600 dark:text-gray-200"
               >
                 Cancel
               </Button>
             </DialogClose>
             <Button
               type="submit"
-              className="capitalize  duration-150 text-white bg-secondaryc hover:bg-primaryc cursor-pointer"
+              className="capitalize hover:bg-thirdc hover:text-white duration-150 cursor-pointer"
               onClick={handleAction}
             >
               {dialogData.mainBtnContent}

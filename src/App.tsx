@@ -7,7 +7,8 @@ import TaskDialog from "./shared/TaskDialog";
 import { useLocation, Outlet } from "react-router-dom";
 import useTheme from "./hooks/useTheme";
 
-
+import { NotesProvider } from "./context/NotesContext";
+import { ResourcesProvider } from "./context/ResourcesContext";
 function App() {
   useTheme();
 
@@ -90,7 +91,8 @@ function App() {
   }
 
   return (
-
+    <NotesProvider>
+      <ResourcesProvider>
         <>
           <TaskDialog
             taskId={currentClickedTaskId}
@@ -136,7 +138,8 @@ function App() {
             </section>
           </section>
         </>
-
+      </ResourcesProvider>
+    </NotesProvider>
   );
 }
 

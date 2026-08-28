@@ -7,7 +7,7 @@ import {
 } from "react";
 
 export interface Resource {
-  id: number|string;
+  id: number;
   title: string;
   source: string;
   category: "Document" | "Design" | "API" | "Development";
@@ -23,7 +23,7 @@ interface ResourcesContextType {
     source: string,
     category: Resource["category"],
   ) => void;
-  deleteResource: (id: number|string) => void;
+  deleteResource: (id: number) => void;
 }
 
 const ResourcesContext = createContext<ResourcesContextType | undefined>(
@@ -76,12 +76,10 @@ export const ResourcesProvider = ({ children }: { children: ReactNode }) => {
       }),
     };
     setResources((prev) => [newRes, ...prev]);
-    window.alert("The Resource Is Added Successfully");
   };
 
-  const deleteResource = (id: number|string) => {
-    const updatedData = resources.filter((resource) => resource.id !== id);
-    setResources(updatedData);
+  const deleteResource = (id: number) => {
+    setResources((prev) => prev.filter((res) => res.id !== id));
   };
 
   return (

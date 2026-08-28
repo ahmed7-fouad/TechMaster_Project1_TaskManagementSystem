@@ -18,7 +18,7 @@ export default function SearchInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full p-3 border border-slate-300 rounded-lg outline-none focus:border-indigo-600 text-sm shadow-sm"
+        className="w-full p-3 border border-slate-300 rounded-lg"
       />
     </div>
   );

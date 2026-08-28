@@ -101,7 +101,7 @@ const SideBar = ({
   return (
     <aside
       className={cn(
-        " py-4 px-5 w-[21rem] fixed  lg:translate-0 bg-primaryc h-screen lg:sticky lg:sticky-top top-0 duration-150 transition-transform z-500",
+        " py-4 px-5 w-[21rem] fixed  lg:translate-0 bg-primaryc h-screen lg:sticky lg:sticky-top top-0 duration-150 transition-transform z-50",
         !sideBarToggleState && "-translate-x-[35rem]",
       )}
     >

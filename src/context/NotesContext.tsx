@@ -7,7 +7,7 @@ import {
 } from "react";
 
 export interface Note {
-  id: number;
+  id: number | string;
   title: string;
   content: string;
   category: string;
@@ -23,7 +23,7 @@ interface NotesContextType {
     content: string;
     category: string;
   }) => void;
-  deleteNote: (id: number) => void;
+  deleteNote: (id: number | string) => void;
 }
 
 const NotesContext = createContext<NotesContextType | undefined>(undefined);
@@ -56,25 +56,38 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("app_notes", JSON.stringify(notes));
   }, [notes]);
 
-  const addNote = (newNoteData: {
-    title: string;
-    content: string;
-    category: string;
-  }) => {
+  const addNote = (titleOrData: any, content?: string, category?: string) => {
+    let newNoteData;
+
+    if (typeof titleOrData === "object" && titleOrData !== null) {
+      newNoteData = titleOrData;
+    } else {
+      newNoteData = {
+        title: titleOrData,
+        content: content || "",
+        category: category || "Work",
+      };
+    }
+
     const newNote: Note = {
       id: Date.now(),
-      ...newNoteData,
+      title: newNoteData.title,
+      content: newNoteData.content,
+      category: newNoteData.category,
       date: new Date().toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
         year: "numeric",
       }),
     };
+
     setNotes((prev) => [newNote, ...prev]);
+    window.alert("The Note Is Added Successfully")
   };
 
-  const deleteNote = (id: number) => {
-    setNotes((prev) => prev.filter((note) => note.id !== id));
+  const deleteNote = (id: number | string) => {
+    let updatedNotes = notes.filter((note) => note.id !== id);
+    setNotes(updatedNotes);
   };
 
   return (

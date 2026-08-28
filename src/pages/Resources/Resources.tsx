@@ -11,15 +11,6 @@ import {
 import SearchInput from "../../components/Input/Input";
 import AddResourceModal from "../../components/Modal/AddResourceModal";
 import { useResources, type Resource } from "../../context/ResourcesContext";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "../../components/ui/dialog";
-import { Button } from "../../components/ui/button";
 
 interface ResourcesProps {
   isModalOpen?: boolean;
@@ -29,6 +20,8 @@ interface ResourcesProps {
 interface AppOutletContext {
   isResourcesModalOpen: boolean;
   setIsResourcesModalOpen: (open: boolean) => void;
+  getTaskIdAndTheme: (id: string | number, theme: string) => void;
+  handleDialogAppearance: () => void;
 }
 
 export default function Resources({
@@ -36,15 +29,18 @@ export default function Resources({
   setIsModalOpen,
 }: ResourcesProps) {
   const outletContext = useOutletContext<AppOutletContext>();
-  const modalOpen = isModalOpen ?? outletContext.isResourcesModalOpen;
-  const closeModal = setIsModalOpen ?? outletContext.setIsResourcesModalOpen;
-  const { resources, addResource, deleteResource } = useResources();
+
+  
+  const modalOpen = isModalOpen ?? outletContext?.isResourcesModalOpen ?? false;
+  const closeModal =
+    setIsModalOpen ?? outletContext?.setIsResourcesModalOpen ?? (() => {});
+
+  const { resources, addResource } = useResources();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
-  const [resourceToDelete, setResourceToDelete] = useState<Resource | null>(
-    null,
-  );
+
+  const { getTaskIdAndTheme, handleDialogAppearance } = outletContext || {};
 
   const handleAddResource = (newResData: {
     title: string;
@@ -172,7 +168,10 @@ export default function Resources({
                           {item.category}
                         </span>
                         <button
-                          onClick={() => setResourceToDelete(item)}
+                          onClick={() => {
+                            handleDialogAppearance?.();
+                            getTaskIdAndTheme?.(item.id, "deleteResource");
+                          }}
                           className="text-gray-400 hover:text-red-500 dark:hover:text-red-400 p-1 transition-colors cursor-pointer"
                           title="Delete resource"
                         >
@@ -246,50 +245,11 @@ export default function Resources({
           </div>
         </div>
       </div>
-
       <AddResourceModal
         isOpen={modalOpen}
         onClose={() => closeModal(false)}
         onAddResource={handleAddResource}
       />
-
-      <Dialog
-        open={resourceToDelete !== null}
-        onOpenChange={(open) => !open && setResourceToDelete(null)}
-      >
-        <DialogContent className="border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
-          <DialogHeader>
-            <DialogTitle>Delete resource?</DialogTitle>
-            <DialogDescription className="dark:text-gray-300">
-              Are you sure you want to delete this resource? This action cannot
-              be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setResourceToDelete(null)}
-              className="border-gray-300 text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={() => {
-                if (resourceToDelete) {
-                  deleteResource(resourceToDelete.id);
-                  setResourceToDelete(null);
-                }
-              }}
-              className="transition-colors hover:bg-red-700"
-            >
-              Delete
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

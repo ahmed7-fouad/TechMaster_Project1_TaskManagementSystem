@@ -7,15 +7,19 @@
   color: #f5f5f5;
 }
 
+
+
+input,textarea,button[role="combobox"],select{
+  @apply border-2 font-semibold border-thirdc dark:border-secondaryc  bg-white text-black outline-2! outline-transparent outline-solid dark:focus:outline-secondaryc! focus:outline-thirdc;
+}
+
 html,
 body,
 #root {
   min-height: 100%;
 }
 
-input{
-  @apply bg-white text-black border-3 border-thirdc dark:border-muted-text
-}
+
 
 body {
   margin: 0;

@@ -11,9 +11,6 @@ import { type taskCardData } from '@/data/TasksData';
 
 import { useOutletContext } from "react-router-dom";
 
-
-
-;
     const TaskCard = ({
       id,
       title,
@@ -86,7 +83,7 @@ import { useOutletContext } from "react-router-dom";
               <Trash2
                 className="cursor-pointer text-red-500"
                 onClick={() => {
-                  getTaskIdAndTheme(id, "delete");
+                  getTaskIdAndTheme(id, "deleteTask");
                   handleDialogAppearance();
                 }}
               />

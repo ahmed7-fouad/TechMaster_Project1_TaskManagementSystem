@@ -39,8 +39,8 @@ export default function AddResourceModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-lg shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 animate-in fade-in zoom-in duration-200">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/80 p-4">
+      <div className="border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 rounded-2xl w-full max-w-lg shadow-xl overflow-hidden border animate-in fade-in zoom-in duration-200">
         <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-gray-700">
           <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">
             Add New Resource
@@ -99,10 +99,18 @@ export default function AddResourceModal({
           </div>
 
           <div className="flex justify-end gap-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="hover:bg-thirdc hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-thirdc cursor-pointer"
+            >
               Cancel
             </Button>
-            <Button type="submit" variant="primary">
+            <Button
+              type="submit"
+              className="text-white bg-secondaryc hover:bg-primaryc cursor-pointer"
+            >
               Save Resource
             </Button>
           </div>

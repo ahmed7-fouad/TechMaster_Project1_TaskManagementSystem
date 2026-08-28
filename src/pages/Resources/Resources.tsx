@@ -11,6 +11,15 @@ import {
 import SearchInput from "../../components/Input/Input";
 import AddResourceModal from "../../components/Modal/AddResourceModal";
 import { useResources, type Resource } from "../../context/ResourcesContext";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../../components/ui/dialog";
+import { Button } from "../../components/ui/button";
 
 interface ResourcesProps {
   isModalOpen?: boolean;
@@ -33,6 +42,9 @@ export default function Resources({
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const [resourceToDelete, setResourceToDelete] = useState<Resource | null>(
+    null,
+  );
 
   const handleAddResource = (newResData: {
     title: string;
@@ -160,7 +172,7 @@ export default function Resources({
                           {item.category}
                         </span>
                         <button
-                          onClick={() => deleteResource(item.id)}
+                          onClick={() => setResourceToDelete(item)}
                           className="text-gray-400 hover:text-red-500 dark:hover:text-red-400 p-1 transition-colors cursor-pointer"
                           title="Delete resource"
                         >
@@ -240,6 +252,44 @@ export default function Resources({
         onClose={() => closeModal(false)}
         onAddResource={handleAddResource}
       />
+
+      <Dialog
+        open={resourceToDelete !== null}
+        onOpenChange={(open) => !open && setResourceToDelete(null)}
+      >
+        <DialogContent className="border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
+          <DialogHeader>
+            <DialogTitle>Delete resource?</DialogTitle>
+            <DialogDescription className="dark:text-gray-300">
+              Are you sure you want to delete this resource? This action cannot
+              be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setResourceToDelete(null)}
+              className="border-gray-300 text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => {
+                if (resourceToDelete) {
+                  deleteResource(resourceToDelete.id);
+                  setResourceToDelete(null);
+                }
+              }}
+              className="transition-colors hover:bg-red-700"
+            >
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

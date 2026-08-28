@@ -2,6 +2,15 @@ import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import SearchInput from "../../components/Input/Input";
 import AddNoteModal from "../../components/Modal/AddNoteModal";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../../components/ui/dialog";
+import { Button } from "../../components/ui/button";
 
 export interface Note {
   id: number;
@@ -26,6 +35,7 @@ export default function Notes({ isModalOpen, setIsModalOpen }: NotesProps) {
   const modalOpen = isModalOpen ?? outletContext.isNotesModalOpen;
   const closeModal = setIsModalOpen ?? outletContext.setIsNotesModalOpen;
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
 
   const [notes, setNotes] = useState<Note[]>(() => {
     const savedNotes = localStorage.getItem("app_notes");
@@ -56,6 +66,7 @@ export default function Notes({ isModalOpen, setIsModalOpen }: NotesProps) {
 
   const handleDeleteNote = (id: number) => {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+    setNoteToDelete(null);
   };
 
   const filteredNotes = notes.filter(
@@ -101,7 +112,7 @@ export default function Notes({ isModalOpen, setIsModalOpen }: NotesProps) {
                 <div className="pt-3 border-t border-slate-100 dark:border-gray-700 flex items-center justify-between text-xs text-slate-400 dark:text-gray-500 font-medium">
                   <span>{note.date}</span>
                   <button
-                    onClick={() => handleDeleteNote(note.id)}
+                    onClick={() => setNoteToDelete(note)}
                     className="text-red-500 hover:text-red-700 dark:hover:text-red-400 font-semibold transition-colors cursor-pointer"
                     title="Delete Note"
                   >
@@ -118,6 +129,41 @@ export default function Notes({ isModalOpen, setIsModalOpen }: NotesProps) {
           onClose={() => closeModal(false)}
           onAddNote={handleAddNote}
         />
+
+        <Dialog
+          open={noteToDelete !== null}
+          onOpenChange={(open) => !open && setNoteToDelete(null)}
+        >
+          <DialogContent className="border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
+            <DialogHeader>
+              <DialogTitle>Delete note?</DialogTitle>
+              <DialogDescription className="dark:text-gray-300">
+                Are you sure you want to delete this note? This action cannot be
+                undone.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setNoteToDelete(null)}
+                className="border-gray-300 text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={() =>
+                  noteToDelete && handleDeleteNote(noteToDelete.id)
+                }
+                className="transition-colors hover:bg-red-700"
+              >
+                Delete
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </section>
     </div>
   );
